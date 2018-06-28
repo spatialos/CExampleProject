@@ -1,0 +1,23 @@
+package sample;
+
+type AddCommandRequest {
+  int32 payload1 = 1;
+  float payload2 = 2;
+}
+
+type AddCommandResponse {
+  float sum = 1;
+}
+
+type Empty {}
+
+component Login {
+  id = 1000;
+  command Empty take_control(Empty);
+}
+
+component ClientData {
+  id = 1001;
+  float input_state = 1;
+  command AddCommandResponse test_command(AddCommandRequest);
+}

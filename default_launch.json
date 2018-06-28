@@ -1,0 +1,44 @@
+{
+  "template": "small",
+  "world": {
+    "chunkEdgeLengthMeters": 50,
+    "snapshots": {
+      "snapshotWritePeriodSeconds": 0
+    },
+    "dimensions": {
+      "xMeters": 1500,
+      "zMeters": 1500
+    }
+  },
+  "workers": [
+    {
+      "worker_type": "physics",
+      "load_balancing": {
+        "auto_hex_grid": {
+          "num_workers": 1
+        }
+      },
+      "permissions": [
+        {
+          "all": {}
+        }
+      ]
+    },
+    {
+      "worker_type": "client_direct",
+      "permissions": [
+        {
+          "all": {}
+        }
+      ]
+    },
+    {
+      "worker_type": "client_vtable",
+      "permissions": [
+        {
+          "all": {}
+        }
+      ]
+    }
+  ]
+}

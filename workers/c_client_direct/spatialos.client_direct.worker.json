@@ -1,0 +1,53 @@
+{
+  "build": {
+    "tasks_filename": "build.json"
+  },
+  "bridge": {
+    "worker_attribute_set": {
+      "attributes": [
+        "client_direct"
+      ]
+    },
+    "entity_interest": {
+      "range_entity_interest": {
+        "radius": 10
+      }
+    },
+    "component_delivery": {
+      "default": "RELIABLE_ORDERED",
+      "checkout_all_initially": true
+    }
+  },
+  "external": {
+    "local": {
+      "run_type": "EXECUTABLE_ZIP",
+      "linux": {
+        "artifact_name": "ClientDirect@Linux.zip",
+        "command": "./ClientDirect",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalLinux"
+        ]
+      },
+      "windows": {
+        "artifact_name": "ClientDirect@Windows.zip",
+        "command": "./ClientDirect.exe",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalWindows"
+        ]
+      },
+      "macos": {
+        "artifact_name": "ClientDirect@Mac.zip",
+        "command": "./ClientDirect",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalMac"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "build": {
+    "generated_build_scripts_type": "csharp",
+    "tasks_filename": "spatialos.csharp.build.json"
+  },
+  "bridge": {
+    "worker_attribute_set": {
+      "attributes": [
+        "physics"
+      ]
+    },
+    "entity_interest": {
+      "range_entity_interest": {
+        "radius": 2
+      }
+    },
+    "component_delivery": {
+      "default": "RELIABLE_ORDERED",
+      "checkout_all_initially": true
+    }
+  },
+  "managed": {
+    "windows": {
+      "artifact_name": "Physics@Windows.zip",
+      "command": "mono",
+      "arguments": [
+        "./Physics.exe",
+        "${IMPROBABLE_RECEPTIONIST_HOST}",
+        "${IMPROBABLE_RECEPTIONIST_PORT}",
+        "${IMPROBABLE_WORKER_ID}"
+      ]
+    },
+    "linux": {
+      "artifact_name": "Physics@Linux.zip",
+      "command": "mono",
+      "arguments": [
+        "./Physics.exe",
+        "${IMPROBABLE_RECEPTIONIST_HOST}",
+        "${IMPROBABLE_RECEPTIONIST_PORT}",
+        "${IMPROBABLE_WORKER_ID}"
+      ]
+    },
+    "macos": {
+      "artifact_name": "Physics@Mac.zip",
+      "command": "mono",
+      "arguments": [
+        "./Physics.exe",
+        "${IMPROBABLE_RECEPTIONIST_HOST}",
+        "${IMPROBABLE_RECEPTIONIST_PORT}",
+        "${IMPROBABLE_WORKER_ID}"
+      ]
+    }
+  },
+  "external": {
+    "local": {
+      "run_type": "EXECUTABLE_ZIP",
+      "windows": {
+        "artifact_name": "Physics@Windows.zip",
+        "command": "mono",
+        "arguments": [
+          "./Physics.exe",
+          "localhost",
+          "7777",
+          "PhysicsLocalWindows"
+        ]
+      },
+      "linux": {
+        "artifact_name": "Physics@Linux.zip",
+        "command": "mono",
+        "arguments": [
+          "./Physics.exe",
+          "localhost",
+          "7777",
+          "PhysicsLocalLinux"
+        ]
+      },
+      "macos": {
+        "artifact_name": "Physics@Mac.zip",
+        "command": "mono",
+        "arguments": [
+          "--arch=64",
+          "./Physics.exe",
+          "localhost",
+          "7777",
+          "PhysicsLocalMac"
+        ]
+      }
+    }
+  }
+}
