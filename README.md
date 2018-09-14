@@ -4,8 +4,8 @@
 
 This project contains workers written in both C and C#, so therefore it depends on the following:
 
-0. The C example workers use [CMake](https://cmake.org/download/) as their build system. On Windows, Visual Studio 2015 or above needs to be installed.
-0. The C# worker depends on Mono, as specified in the [C# worker SDK requirements](https://docs.improbable.io/reference/latest/csharpsdk/requirements).
+1. The C example workers use [CMake](https://cmake.org/download/) as their build system. On Windows, Visual Studio 2015 or above needs to be installed.
+1. The C# worker depends on Mono, as specified in the [C# worker SDK requirements](https://docs.improbable.io/reference/latest/csharpsdk/requirements).
 
 ## Quick start
 
