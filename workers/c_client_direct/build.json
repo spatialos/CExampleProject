@@ -37,7 +37,7 @@
           ]
         },
         {
-          "name": "CMake configure",
+          "name": "CMake configure for Windows",
           "working_path": "cmake_build",
           "command": "cmake",
           "arguments": [
@@ -48,7 +48,7 @@
           "target": "windows"
         },
         {
-          "name": "CMake configure",
+          "name": "CMake configure for Linux",
           "working_path": "cmake_build",
           "command": "cmake",
           "arguments": [
@@ -61,7 +61,7 @@
           "target": "linux"
         },
         {
-          "name": "CMake configure",
+          "name": "CMake configure for macOS",
           "working_path": "cmake_build",
           "command": "cmake",
           "arguments": [
