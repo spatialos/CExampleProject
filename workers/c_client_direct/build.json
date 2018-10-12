@@ -5,8 +5,10 @@
       "steps": [
         {
           "name": "Insert custom codegen step here",
-          "command": "true",
-          "arguments": []
+          "command": "echo",
+          "arguments": [
+            "No-op."
+          ]
         }
       ]
     },
