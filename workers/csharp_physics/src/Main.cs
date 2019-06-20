@@ -61,7 +61,7 @@ internal class Physics
 
                 Improbable.EntityAcl.Update aclUpdate = new EntityAcl.Update();
                 var currentWriteAcl = view.Entities[ourEntity].Get<EntityAcl>().Value.Get().Value.componentWriteAcl;
-                Improbable.Collections.List<string> filteredCallerAttributeSet = new Improbable.Collections.List<string>();           
+                var filteredCallerAttributeSet = new Improbable.Collections.List<string>();           
                 filteredCallerAttributeSet.Add(op.CallerAttributeSet[1]);
                 var workerAttributeSet = new WorkerAttributeSet(filteredCallerAttributeSet);
                 currentWriteAcl[ClientDataComponentId] = new WorkerRequirementSet(new List<WorkerAttributeSet>(new[] {workerAttributeSet}));
@@ -71,7 +71,7 @@ internal class Physics
 
             view.OnCommandResponse<ClientData.Commands.TestCommand>(op =>
             {
-                if (op.StatusCode == StatusCode.Success)
+                Iif (op.StatusCode == StatusCode.Success)
                 {
                     connection.SendLogMessage(LogLevel.Info, "Physics",
                         "Received command response: " + op.Response.Value.Get().Value.sum);
