@@ -57,11 +57,13 @@ internal class Physics
             view.OnCommandRequest<Login.Commands.TakeControl>(op =>
             {
                 // Assign write ACL of 1001 to the worker ID received.
-                connection.SendLogMessage(LogLevel.Info, "Physics", "Assigning ClientData component to " + op.CallerAttributeSet[0]);
-                
+                connection.SendLogMessage(LogLevel.Info, "Physics", "Assigning ClientData component to " + op.CallerAttributeSet[1]);
+
                 Improbable.EntityAcl.Update aclUpdate = new EntityAcl.Update();
                 var currentWriteAcl = view.Entities[ourEntity].Get<EntityAcl>().Value.Get().Value.componentWriteAcl;
-                var workerAttributeSet = new WorkerAttributeSet(op.CallerAttributeSet);
+                Improbable.Collections.List<string> filteredCallerAttributeSet = new Improbable.Collections.List<string>();           
+                filteredCallerAttributeSet.Add(op.CallerAttributeSet[1]);
+                var workerAttributeSet = new WorkerAttributeSet(filteredCallerAttributeSet);
                 currentWriteAcl[ClientDataComponentId] = new WorkerRequirementSet(new List<WorkerAttributeSet>(new[] {workerAttributeSet}));
                 aclUpdate.componentWriteAcl.Set(currentWriteAcl);
                 connection.SendComponentUpdate(ourEntity, aclUpdate);
