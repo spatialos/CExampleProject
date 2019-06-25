@@ -71,7 +71,7 @@ internal class Physics
 
             view.OnCommandResponse<ClientData.Commands.TestCommand>(op =>
             {
-                Iif (op.StatusCode == StatusCode.Success)
+                if (op.StatusCode == StatusCode.Success)
                 {
                     connection.SendLogMessage(LogLevel.Info, "Physics",
                         "Received command response: " + op.Response.Value.Get().Value.sum);
