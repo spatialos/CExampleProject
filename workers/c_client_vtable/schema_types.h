@@ -26,9 +26,13 @@ typedef struct {
   double y;
   double z;
 } Improbable_Coords;
-typedef struct { Improbable_Coords coords; } Improbable_Position;
+typedef struct {
+  Improbable_Coords coords;
+} Improbable_Position;
 
-typedef struct { Improbable_Coords* coords; } Improbable_PositionUpdate;
+typedef struct {
+  Improbable_Coords* coords;
+} Improbable_PositionUpdate;
 
 /* sample.Login */
 typedef struct {
@@ -40,16 +44,22 @@ typedef Sample_Empty Sample_Login_TakeControl_Request;
 typedef Sample_Empty Sample_Login_TakeControl_Response;
 
 /* sample.ClientData */
-typedef struct { float input_state; } Sample_ClientData;
+typedef struct {
+  float input_state;
+} Sample_ClientData;
 
-typedef struct { float* input_state; } Sample_ClientDataUpdate;
+typedef struct {
+  float* input_state;
+} Sample_ClientDataUpdate;
 
 typedef struct {
   int32_t payload1;
   float payload2;
 } Sample_AddCommandRequest;
 
-typedef struct { float sum; } Sample_AddCommandResponse;
+typedef struct {
+  float sum;
+} Sample_AddCommandResponse;
 
 typedef Sample_AddCommandRequest Sample_ClientData_TestCommand_Request;
 typedef Sample_AddCommandResponse Sample_ClientData_TestCommand_Response;
@@ -85,53 +95,68 @@ void Improbable_Position_ComponentUpdateSerialize(Worker_ComponentId component_i
                                                   Schema_ComponentUpdate** target_out);
 
 /* sample.ClientData */
-void Sample_Login_CommandRequestFree(Worker_ComponentId component_id, void* user_data,
+void Sample_Login_CommandRequestFree(Worker_ComponentId component_id,
+                                     Worker_CommandIndex command_index, void* user_data,
                                      Worker_CommandRequestHandle* handle);
 Worker_CommandRequestHandle* Sample_Login_CommandRequestCopy(Worker_ComponentId component_id,
+                                                             Worker_CommandIndex command_index,
                                                              void* user_data,
                                                              Worker_CommandRequestHandle* handle);
-uint8_t Sample_Login_CommandRequestDeserialize(Worker_ComponentId component_id, void* user_data,
+uint8_t Sample_Login_CommandRequestDeserialize(Worker_ComponentId component_id,
+                                               Worker_CommandIndex command_index, void* user_data,
                                                Schema_CommandRequest* source,
                                                Worker_CommandRequestHandle** handle_out);
-void Sample_Login_CommandRequestSerialize(Worker_ComponentId component_id, void* user_data,
+void Sample_Login_CommandRequestSerialize(Worker_ComponentId component_id,
+                                          Worker_CommandIndex command_index, void* user_data,
                                           Worker_CommandRequestHandle* handle,
                                           Schema_CommandRequest** target_out);
 
-void Sample_Login_CommandResponseFree(Worker_ComponentId component_id, void* user_data,
+void Sample_Login_CommandResponseFree(Worker_ComponentId component_id,
+                                      Worker_CommandIndex command_index, void* user_data,
                                       Worker_CommandResponseHandle* handle);
 Worker_CommandResponseHandle*
-Sample_Login_CommandResponseCopy(Worker_ComponentId component_id, void* user_data,
-                                 Worker_CommandResponseHandle* handle);
-uint8_t Sample_Login_CommandResponseDeserialize(Worker_ComponentId component_id, void* user_data,
+Sample_Login_CommandResponseCopy(Worker_ComponentId component_id, Worker_CommandIndex command_index,
+                                 void* user_data, Worker_CommandResponseHandle* handle);
+uint8_t Sample_Login_CommandResponseDeserialize(Worker_ComponentId component_id,
+                                                Worker_CommandIndex command_index, void* user_data,
                                                 Schema_CommandResponse* source,
                                                 Worker_CommandResponseHandle** handle_out);
-void Sample_Login_CommandResponseSerialize(Worker_ComponentId component_id, void* user_data,
+void Sample_Login_CommandResponseSerialize(Worker_ComponentId component_id,
+                                           Worker_CommandIndex command_index, void* user_data,
                                            Worker_CommandResponseHandle* handle,
                                            Schema_CommandResponse** target_out);
 
 /* sample.ClientData */
-void Sample_ClientData_CommandRequestFree(Worker_ComponentId component_id, void* user_data,
+void Sample_ClientData_CommandRequestFree(Worker_ComponentId component_id,
+                                          Worker_CommandIndex command_index, void* user_data,
                                           Worker_CommandRequestHandle* handle);
 Worker_CommandRequestHandle*
-Sample_ClientData_CommandRequestCopy(Worker_ComponentId component_id, void* user_data,
+Sample_ClientData_CommandRequestCopy(Worker_ComponentId component_id,
+                                     Worker_CommandIndex command_index, void* user_data,
                                      Worker_CommandRequestHandle* handle);
 uint8_t Sample_ClientData_CommandRequestDeserialize(Worker_ComponentId component_id,
+                                                    Worker_CommandIndex command_index,
                                                     void* user_data, Schema_CommandRequest* source,
                                                     Worker_CommandRequestHandle** handle_out);
-void Sample_ClientData_CommandRequestSerialize(Worker_ComponentId component_id, void* user_data,
+void Sample_ClientData_CommandRequestSerialize(Worker_ComponentId component_id,
+                                               Worker_CommandIndex command_index, void* user_data,
                                                Worker_CommandRequestHandle* handle,
                                                Schema_CommandRequest** target_out);
 
-void Sample_ClientData_CommandResponseFree(Worker_ComponentId component_id, void* user_data,
+void Sample_ClientData_CommandResponseFree(Worker_ComponentId component_id,
+                                           Worker_CommandIndex command_index, void* user_data,
                                            Worker_CommandResponseHandle* handle);
 Worker_CommandResponseHandle*
-Sample_ClientData_CommandResponseCopy(Worker_ComponentId component_id, void* user_data,
+Sample_ClientData_CommandResponseCopy(Worker_ComponentId component_id,
+                                      Worker_CommandIndex command_index, void* user_data,
                                       Worker_CommandResponseHandle* handle);
 uint8_t Sample_ClientData_CommandResponseDeserialize(Worker_ComponentId component_id,
+                                                     Worker_CommandIndex command_index,
                                                      void* user_data,
                                                      Schema_CommandResponse* source,
                                                      Worker_CommandResponseHandle** handle_out);
-void Sample_ClientData_CommandResponseSerialize(Worker_ComponentId component_id, void* user_data,
+void Sample_ClientData_CommandResponseSerialize(Worker_ComponentId component_id,
+                                                Worker_CommandIndex command_index, void* user_data,
                                                 Worker_CommandResponseHandle* handle,
                                                 Schema_CommandResponse** target_out);
 

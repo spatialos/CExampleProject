@@ -33,8 +33,8 @@ internal class Physics
         };
 
         using (var connection = ConnectWithReceptionist(args[0], Convert.ToUInt16(args[1]), args[2], connectionParameters))
-        using (var view = new View())
         {
+            var view = new View();
             var isConnected = true;
             EntityId ourEntity = new EntityId(1);
             float angle = 0.0f;
@@ -54,7 +54,7 @@ internal class Physics
                 }
             });
 
-            view.OnCommandRequest<Login.Commands.TakeControl>(op =>
+            view.OnCommandRequest(Login.Commands.TakeControl.Metaclass, op =>
             {
                 // Assign write ACL of 1001 to the worker ID received.
                 connection.SendLogMessage(LogLevel.Info, "Physics", "Assigning ClientData component to " + op.CallerAttributeSet[1]);
@@ -69,12 +69,12 @@ internal class Physics
                 connection.SendComponentUpdate(ourEntity, aclUpdate);
             });
 
-            view.OnCommandResponse<ClientData.Commands.TestCommand>(op =>
+            view.OnCommandResponse(ClientData.Commands.TestCommand.Metaclass, op =>
             {
                 if (op.StatusCode == StatusCode.Success)
                 {
                     connection.SendLogMessage(LogLevel.Info, "Physics",
-                        "Received command response: " + op.Response.Value.Get().Value.sum);
+                        "Received command response: " + op.Response.Value.sum);
                 }
             });
 
@@ -89,7 +89,7 @@ internal class Physics
                     angle += 0.5f;
                     Position.Update positionUpdate = new Position.Update();
                     positionUpdate.coords.Set(new Coordinates(Math.Sin(angle) * 10, 0.0, Math.Cos(angle) * 10));
-                    connection.SendComponentUpdate(ourEntity, positionUpdate);
+                    connection.SendComponentUpdate(Position.Metaclass, ourEntity, positionUpdate);
 
                     // Sleep for some time.
                     System.Threading.Thread.Sleep(1000);
@@ -97,7 +97,8 @@ internal class Physics
                     // Send a command every 2 ticks.
                     if (tickCount % 2 == 0)
                     {
-                        connection.SendCommandRequest(ourEntity, new ClientData.Commands.TestCommand.Request(10, 1.5f), null);
+                        connection.SendCommandRequest(ClientData.Commands.TestCommand.Metaclass, 
+                            ourEntity, new Sample.AddCommandRequest(10, 1.5f), null);
                     }
                     tickCount++;
                 }

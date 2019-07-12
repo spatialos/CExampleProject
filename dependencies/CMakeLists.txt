@@ -7,20 +7,16 @@ set(WORKER_SDK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/worker_sdk")
 
 # C API libraries
 find_package(Threads)
-find_library(LIB_WORKER worker "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
-find_library(LIB_PROTOBUF NAMES protobuf libprotobuf PATHS "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
+find_library(LIB_IMPROBABLE_WORKER improbable_worker "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
 find_library(LIB_RAKNET RakNetLibStatic "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
 find_library(LIB_SSL ssl "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
 find_library(LIB_ZLIB NAMES z zlibstatic PATHS "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
-find_library(LIB_GPR NAMES gpr PATHS "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
-find_library(LIB_GRPC NAMES grpc PATHS "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
-find_library(LIB_GRPCXX NAMES grpc++ PATHS "${WORKER_SDK_DIR}/lib" NO_DEFAULT_PATH)
 
 # C API.
 add_library(CWorker INTERFACE)
-target_include_directories(CWorker SYSTEM INTERFACE "${WORKER_SDK_DIR}/include")
+target_include_directories(CWorker SYSTEM INTERFACE "${WORKER_SDK_DIR}/headers/include")
 target_link_libraries(CWorker INTERFACE
-  ${LIB_WORKER} ${LIB_GRPCXX} ${LIB_GRPC} ${LIB_GPR}
+  ${LIB_IMPROBABLE_WORKER} ${LIB_GRPCXX} ${LIB_GRPC} ${LIB_GPR}
   ${LIB_PROTOBUF} ${LIB_RAKNET} ${CMAKE_THREAD_LIBS_INIT} ${LIB_SSL}
   ${LIB_ZLIB} ${CMAKE_DL_LIBS})
 

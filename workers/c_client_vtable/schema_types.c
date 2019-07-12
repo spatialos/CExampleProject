@@ -102,7 +102,8 @@ void Improbable_Position_ComponentUpdateSerialize(Worker_ComponentId component_i
   }
 }
 
-void Sample_Login_CommandRequestFree(Worker_ComponentId component_id, void* user_data,
+void Sample_Login_CommandRequestFree(Worker_ComponentId component_id,
+                                     Worker_CommandIndex command_index, void* user_data,
                                      Worker_CommandRequestHandle* handle) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
   free(command_object->data);
@@ -110,6 +111,7 @@ void Sample_Login_CommandRequestFree(Worker_ComponentId component_id, void* user
 }
 
 Worker_CommandRequestHandle* Sample_Login_CommandRequestCopy(Worker_ComponentId component_id,
+                                                             Worker_CommandIndex command_index,
                                                              void* user_data,
                                                              Worker_CommandRequestHandle* handle) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
@@ -126,10 +128,11 @@ Worker_CommandRequestHandle* Sample_Login_CommandRequestCopy(Worker_ComponentId 
   }
 }
 
-uint8_t Sample_Login_CommandRequestDeserialize(Worker_ComponentId component_id, void* user_data,
+uint8_t Sample_Login_CommandRequestDeserialize(Worker_ComponentId component_id,
+                                               Worker_CommandIndex command_index, void* user_data,
                                                Schema_CommandRequest* source,
                                                Worker_CommandRequestHandle** handle_out) {
-  if (Schema_GetCommandRequestCommandIndex(source) == 1) {
+  if (command_index == 1) {
     Sample_Login_TakeControl_Request* new_data =
         (Sample_Login_TakeControl_Request*)calloc(1, sizeof(Sample_Login_TakeControl_Request));
     *handle_out = CreateCommandObject(1, new_data);
@@ -141,7 +144,8 @@ uint8_t Sample_Login_CommandRequestDeserialize(Worker_ComponentId component_id, 
   }
 }
 
-void Sample_Login_CommandRequestSerialize(Worker_ComponentId component_id, void* user_data,
+void Sample_Login_CommandRequestSerialize(Worker_ComponentId component_id,
+                                          Worker_CommandIndex command_index, void* user_data,
                                           Worker_CommandRequestHandle* handle,
                                           Schema_CommandRequest** target_out) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
@@ -156,7 +160,8 @@ void Sample_Login_CommandRequestSerialize(Worker_ComponentId component_id, void*
   }
 }
 
-void Sample_Login_CommandResponseFree(Worker_ComponentId component_id, void* user_data,
+void Sample_Login_CommandResponseFree(Worker_ComponentId component_id,
+                                      Worker_CommandIndex command_index, void* user_data,
                                       Worker_CommandResponseHandle* handle) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
   free(command_object->data);
@@ -164,8 +169,8 @@ void Sample_Login_CommandResponseFree(Worker_ComponentId component_id, void* use
 }
 
 Worker_CommandResponseHandle*
-Sample_Login_CommandResponseCopy(Worker_ComponentId component_id, void* user_data,
-                                 Worker_CommandResponseHandle* handle) {
+Sample_Login_CommandResponseCopy(Worker_ComponentId component_id, Worker_CommandIndex command_index,
+                                 void* user_data, Worker_CommandResponseHandle* handle) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
   if (command_object->command_index == 1) {
     Sample_Login_TakeControl_Response* data =
@@ -180,10 +185,11 @@ Sample_Login_CommandResponseCopy(Worker_ComponentId component_id, void* user_dat
   }
 }
 
-uint8_t Sample_Login_CommandResponseDeserialize(Worker_ComponentId component_id, void* user_data,
+uint8_t Sample_Login_CommandResponseDeserialize(Worker_ComponentId component_id,
+                                                Worker_CommandIndex command_index, void* user_data,
                                                 Schema_CommandResponse* source,
                                                 Worker_CommandResponseHandle** handle_out) {
-  if (Schema_GetCommandResponseCommandIndex(source) == 1) {
+  if (command_index == 1) {
     Sample_Login_TakeControl_Response* new_data =
         (Sample_Login_TakeControl_Response*)calloc(1, sizeof(Sample_Login_TakeControl_Response));
     *handle_out = CreateCommandObject(1, new_data);
@@ -195,7 +201,8 @@ uint8_t Sample_Login_CommandResponseDeserialize(Worker_ComponentId component_id,
   }
 }
 
-void Sample_Login_CommandResponseSerialize(Worker_ComponentId component_id, void* user_data,
+void Sample_Login_CommandResponseSerialize(Worker_ComponentId component_id,
+                                           Worker_CommandIndex command_index, void* user_data,
                                            Worker_CommandResponseHandle* handle,
                                            Schema_CommandResponse** target_out) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
@@ -210,7 +217,8 @@ void Sample_Login_CommandResponseSerialize(Worker_ComponentId component_id, void
   }
 }
 
-void Sample_ClientData_CommandRequestFree(Worker_ComponentId component_id, void* user_data,
+void Sample_ClientData_CommandRequestFree(Worker_ComponentId component_id,
+                                          Worker_CommandIndex command_index, void* user_data,
                                           Worker_CommandRequestHandle* handle) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
   free(command_object->data);
@@ -218,7 +226,8 @@ void Sample_ClientData_CommandRequestFree(Worker_ComponentId component_id, void*
 }
 
 Worker_CommandRequestHandle*
-Sample_ClientData_CommandRequestCopy(Worker_ComponentId component_id, void* user_data,
+Sample_ClientData_CommandRequestCopy(Worker_ComponentId component_id,
+                                     Worker_CommandIndex command_index, void* user_data,
                                      Worker_CommandRequestHandle* handle) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
   if (command_object->command_index == 1) {
@@ -236,9 +245,10 @@ Sample_ClientData_CommandRequestCopy(Worker_ComponentId component_id, void* user
 }
 
 uint8_t Sample_ClientData_CommandRequestDeserialize(Worker_ComponentId component_id,
+                                                    Worker_CommandIndex command_index,
                                                     void* user_data, Schema_CommandRequest* source,
                                                     Worker_CommandRequestHandle** handle_out) {
-  if (Schema_GetCommandRequestCommandIndex(source) == 1) {
+  if (command_index == 1) {
     Sample_ClientData_TestCommand_Request* new_data =
         (Sample_ClientData_TestCommand_Request*)calloc(
             1, sizeof(Sample_ClientData_TestCommand_Request));
@@ -254,7 +264,8 @@ uint8_t Sample_ClientData_CommandRequestDeserialize(Worker_ComponentId component
   }
 }
 
-void Sample_ClientData_CommandRequestSerialize(Worker_ComponentId component_id, void* user_data,
+void Sample_ClientData_CommandRequestSerialize(Worker_ComponentId component_id,
+                                               Worker_CommandIndex command_index, void* user_data,
                                                Worker_CommandRequestHandle* handle,
                                                Schema_CommandRequest** target_out) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
@@ -271,7 +282,8 @@ void Sample_ClientData_CommandRequestSerialize(Worker_ComponentId component_id, 
   }
 }
 
-void Sample_ClientData_CommandResponseFree(Worker_ComponentId component_id, void* user_data,
+void Sample_ClientData_CommandResponseFree(Worker_ComponentId component_id,
+                                           Worker_CommandIndex command_index, void* user_data,
                                            Worker_CommandResponseHandle* handle) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
   free(command_object->data);
@@ -279,7 +291,8 @@ void Sample_ClientData_CommandResponseFree(Worker_ComponentId component_id, void
 }
 
 Worker_CommandResponseHandle*
-Sample_ClientData_CommandResponseCopy(Worker_ComponentId component_id, void* user_data,
+Sample_ClientData_CommandResponseCopy(Worker_ComponentId component_id,
+                                      Worker_CommandIndex command_index, void* user_data,
                                       Worker_CommandResponseHandle* handle) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;
   if (command_object->command_index == 1) {
@@ -297,10 +310,11 @@ Sample_ClientData_CommandResponseCopy(Worker_ComponentId component_id, void* use
 }
 
 uint8_t Sample_ClientData_CommandResponseDeserialize(Worker_ComponentId component_id,
+                                                     Worker_CommandIndex command_index,
                                                      void* user_data,
                                                      Schema_CommandResponse* source,
                                                      Worker_CommandResponseHandle** handle_out) {
-  if (Schema_GetCommandResponseCommandIndex(source) == 1) {
+  if (command_index == 1) {
     Sample_ClientData_TestCommand_Response* new_data =
         (Sample_ClientData_TestCommand_Response*)calloc(
             1, sizeof(Sample_ClientData_TestCommand_Response));
@@ -315,7 +329,8 @@ uint8_t Sample_ClientData_CommandResponseDeserialize(Worker_ComponentId componen
   }
 }
 
-void Sample_ClientData_CommandResponseSerialize(Worker_ComponentId component_id, void* user_data,
+void Sample_ClientData_CommandResponseSerialize(Worker_ComponentId component_id,
+                                                Worker_CommandIndex command_index, void* user_data,
                                                 Worker_CommandResponseHandle* handle,
                                                 Schema_CommandResponse** target_out) {
   GenericCommandObject* command_object = (GenericCommandObject*)handle;

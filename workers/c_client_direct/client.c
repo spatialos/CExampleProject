@@ -74,9 +74,9 @@ void OnComponentUpdate(const Worker_ComponentUpdateOp* op) {
 }
 
 void OnCommandRequest(Worker_Connection* connection, const Worker_CommandRequestOp* op) {
-  Schema_FieldId command_index = Schema_GetCommandRequestCommandIndex(op->request.schema_type);
-  printf("received command request (entity: %" PRId64 ", component: %d, command: %d).\n", op->entity_id,
-         op->request.component_id, command_index);
+  Schema_FieldId command_index = op->request.command_index;
+  printf("received command request (entity: %" PRId64 ", component: %d, command: %d).\n",
+         op->entity_id, op->request.component_id, command_index);
 
   if (op->request.component_id == CLIENTDATA_COMPONENT_ID && command_index == 1) {
     Schema_Object* payload = Schema_GetCommandRequestObject(op->request.schema_type);
@@ -125,7 +125,7 @@ int main(int argc, char** argv) {
   /* Send an entity query. */
   Worker_EntityQuery query;
   query.constraint.constraint_type = WORKER_CONSTRAINT_TYPE_ENTITY_ID;
-  query.constraint.entity_id_constraint.entity_id = 1;
+  query.constraint.constraint.entity_id_constraint.entity_id = 1;
   query.result_type = WORKER_RESULT_TYPE_SNAPSHOT;
   query.snapshot_result_type_component_id_count = 1;
   Worker_ComponentId position_component_id = POSITION_COMPONENT_ID;
@@ -136,11 +136,11 @@ int main(int argc, char** argv) {
   Worker_CommandRequest command_request;
   memset(&command_request, 0, sizeof(command_request));
   command_request.component_id = LOGIN_COMPONENT_ID;
+  command_request.command_index = 1;
   command_request.schema_type = Schema_CreateCommandRequest(LOGIN_COMPONENT_ID, 1);
   Worker_CommandParameters command_parameters;
   command_parameters.allow_short_circuit = 0;
-  Worker_Connection_SendCommandRequest(connection, 1, &command_request, 1, NULL,
-                                       &command_parameters);
+  Worker_Connection_SendCommandRequest(connection, 1, &command_request, NULL, &command_parameters);
 
   /* Main loop. */
   while (1) {
@@ -149,22 +149,22 @@ int main(int argc, char** argv) {
       Worker_Op* op = &op_list->ops[i];
       switch (op->op_type) {
       case WORKER_OP_TYPE_DISCONNECT:
-        OnDisconnect(&op->disconnect);
+        OnDisconnect(&op->op.disconnect);
         break;
       case WORKER_OP_TYPE_LOG_MESSAGE:
-        OnLogMessage(&op->log_message);
+        OnLogMessage(&op->op.log_message);
         break;
       case WORKER_OP_TYPE_ENTITY_QUERY_RESPONSE:
-        OnEntityQueryResponse(&op->entity_query_response);
+        OnEntityQueryResponse(&op->op.entity_query_response);
         break;
       case WORKER_OP_TYPE_ADD_COMPONENT:
-        OnAddComponent(&op->add_component);
+        OnAddComponent(&op->op.add_component);
         break;
       case WORKER_OP_TYPE_COMPONENT_UPDATE:
-        OnComponentUpdate(&op->component_update);
+        OnComponentUpdate(&op->op.component_update);
         break;
       case WORKER_OP_TYPE_COMMAND_REQUEST:
-        OnCommandRequest(connection, &op->command_request);
+        OnCommandRequest(connection, &op->op.command_request);
         break;
       default:
         break;
