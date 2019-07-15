@@ -1,6 +1,6 @@
 {
   "build": {
-    "generated_build_scripts_type": "csharp_msbuild",
+    "generated_build_scripts_type": "csharp",
     "tasks_filename": "spatialos.csharp.build.json"
   },
   "bridge": {
