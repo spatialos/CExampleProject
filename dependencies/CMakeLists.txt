@@ -16,9 +16,8 @@ find_library(LIB_ZLIB NAMES z zlibstatic PATHS "${WORKER_SDK_DIR}/lib" NO_DEFAUL
 add_library(CWorker INTERFACE)
 target_include_directories(CWorker SYSTEM INTERFACE "${WORKER_SDK_DIR}/headers/include")
 target_link_libraries(CWorker INTERFACE
-  ${LIB_IMPROBABLE_WORKER} ${LIB_GRPCXX} ${LIB_GRPC} ${LIB_GPR}
-  ${LIB_PROTOBUF} ${LIB_RAKNET} ${CMAKE_THREAD_LIBS_INIT} ${LIB_SSL}
-  ${LIB_ZLIB} ${CMAKE_DL_LIBS})
+  ${LIB_IMPROBABLE_WORKER} ${LIB_RAKNET} ${LIB_SSL} ${LIB_ZLIB}
+  ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_DL_LIBS})
 
 # As the C API is implemented using C++ under the hood, it depends on the C++ standard library
 # being linked. As a result, we need to explicitly link against the C++ standard library to
