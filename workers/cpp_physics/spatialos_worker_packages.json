@@ -1,11 +1,11 @@
 {
   "targets": [
     {
-      "path": "../../dependencies/worker_sdk/c_headers",
+      "path": "../../dependencies/worker_sdk/cpp_headers",
       "type": "worker_sdk",
       "packages": [
         {
-          "name": "c_headers"
+          "name": "cpp_headers"
         }
       ]
     },

@@ -2,10 +2,10 @@
 
 ## Dependencies
 
-This project contains workers written in both C and C#, so therefore it depends on the following:
-
-1. The C example workers use [CMake](https://cmake.org/download/) as their build system. On Windows, Visual Studio 2015 or above needs to be installed.
-1. The C# worker depends on a C# development environment (with `msbuild`), such as Visual Studio or Mono, as specified in the [C# worker SDK requirements](https://docs.improbable.io/reference/latest/csharpsdk/setting-up).
+This project contains workers written in both C and C++ and use [CMake](https://cmake.org/download/)
+as their build system. Your system needs to satisfy the
+[C++ prerequisites](https://docs.improbable.io/reference/latest/cppsdk/setting-up#prerequisites).
+In practice, this just means having a fairly recent compiler that supports C++11 or later.
 
 ## Quick start
 
@@ -18,13 +18,29 @@ spatial local launch
 
 (Replacing `windows` with `macos` on macOS, or `linux` on Linux).
 
-This will launch SpatialOS locally with a single C# "physics" worker that updates the position of
-a single entity. You can then connect either one of the two C client workers (one implemented using
-"direct" serialization, the other implemented using "vtable" serialization). These workers can be
+This will launch SpatialOS locally with a single C++ "physics" worker that updates the position of
+a single entity. You may also see a 2nd entity called "physics-worker" created. This entity
+represents the managed worker itself.
+
+Note: If you run `spatial worker build` without a `--target` parameter (or with the wrong target
+parameter), then the CMake cache for each worker (`workers/<worker>/cmake_build`) may end up in
+a corrupt state. To recover, just run `spatial worker clean` to delete the CMake caches.
+
+Now, you can connect either one of the two C client workers (one implemented using "direct"
+serialization, the other implemented using "vtable" serialization). These workers can be
 launched with the following commands:
 
 * Client (direct): `spatial local worker launch client_direct local`
 * Client (vtable): `spatial local worker launch client_vtable local`
+
+No output will be written, but you should see a 2nd worker connect in the inspector. To view the
+printf logging from the C workers, launch the executable directly. For example, on Windows:
+
+```
+./workers/c_client_direct/cmake_build/Debug/ClientDirect.exe localhost 7777 ClientDirect1
+```
+
+(note that the 3rd parameter should be a different string every time you run a worker).
 
 ## Scenario
 
@@ -35,12 +51,12 @@ implementations of the same worker in `workers/c_client_direct` and `workers/c_c
 Either one of these can be used as a basis for further experimentation, and the client worker that's
 not being used can easily be deleted without breaking any other functionality.
 
-When a client worker connects, it sends a command to the C# worker (on the `sample.Login` component).
-The C# worker then modifies the entity's write ACLs to delegate component 1001 (`sample.ClientData`)
-to the client, using the `CallerWorkerAttributes` field of the `CommandRequestOp`. This causes the
-entity to be checked out by the client worker, and the client worker will begin to receive component
-updates for position changes. The physics worker will also begin to send a simple command to the
-client every few seconds.
+When a client worker connects, it sends a command to the C++ worker (on the `sample.Login`
+component). The C++ worker then modifies the entity's write ACLs to delegate component 1001
+(`sample.ClientData`) to the client, using the `CallerWorkerAttributes` field of the
+`CommandRequestOp`. This causes the entity to be checked out by the client worker, and the client
+worker will begin to receive component updates for position changes. The physics worker will also
+begin to send a simple command to the client every few seconds.
 
 ## Snapshot
 

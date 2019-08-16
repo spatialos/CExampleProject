@@ -1,7 +1,6 @@
 {
   "build": {
-    "generated_build_scripts_type": "csharp",
-    "tasks_filename": "spatialos.csharp.build.json"
+    "tasks_filename": "build.json"
   },
   "bridge": {
     "worker_attribute_set": {
@@ -20,21 +19,19 @@
     }
   },
   "managed": {
-    "windows": {
-      "artifact_name": "Physics@Windows.zip",
-      "command": "mono",
+    "linux": {
+      "artifact_name": "Physics@Linux.zip",
+      "command": "./Physics",
       "arguments": [
-        "./Physics.exe",
         "${IMPROBABLE_RECEPTIONIST_HOST}",
         "${IMPROBABLE_RECEPTIONIST_PORT}",
         "${IMPROBABLE_WORKER_ID}"
       ]
     },
-    "linux": {
-      "artifact_name": "Physics@Linux.zip",
-      "command": "mono",
+    "windows": {
+      "artifact_name": "Physics@Windows.zip",
+      "command": "./Physics.exe",
       "arguments": [
-        "./Physics.exe",
         "${IMPROBABLE_RECEPTIONIST_HOST}",
         "${IMPROBABLE_RECEPTIONIST_PORT}",
         "${IMPROBABLE_WORKER_ID}"
@@ -42,9 +39,8 @@
     },
     "macos": {
       "artifact_name": "Physics@Mac.zip",
-      "command": "mono",
+      "command": "./Physics",
       "arguments": [
-        "./Physics.exe",
         "${IMPROBABLE_RECEPTIONIST_HOST}",
         "${IMPROBABLE_RECEPTIONIST_PORT}",
         "${IMPROBABLE_WORKER_ID}"
@@ -56,33 +52,29 @@
       "run_type": "EXECUTABLE_ZIP",
       "windows": {
         "artifact_name": "Physics@Windows.zip",
-        "command": "mono",
+        "command": "./Physics.exe",
         "arguments": [
-          "./Physics.exe",
           "localhost",
           "7777",
           "PhysicsLocalWindows"
         ]
       },
-      "linux": {
-        "artifact_name": "Physics@Linux.zip",
-        "command": "mono",
-        "arguments": [
-          "./Physics.exe",
-          "localhost",
-          "7777",
-          "PhysicsLocalLinux"
-        ]
-      },
       "macos": {
         "artifact_name": "Physics@Mac.zip",
-        "command": "mono",
+        "command": "./Physics",
         "arguments": [
-          "--arch=64",
-          "./Physics.exe",
           "localhost",
           "7777",
           "PhysicsLocalMac"
+        ]
+      },
+      "linux": {
+        "artifact_name": "Physics@Linux.zip",
+        "command": "./Physics",
+        "arguments": [
+          "localhost",
+          "7777",
+          "PhysicsLocalLinux"
         ]
       }
     }

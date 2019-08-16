@@ -6,6 +6,10 @@
 project(ClientDirect C)
 cmake_minimum_required(VERSION 3.0)
 
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 set(APPLICATION_ROOT "${PROJECT_SOURCE_DIR}/../..")
 set(WORKER_SDK_DIR "${APPLICATION_ROOT}/dependencies")
 
