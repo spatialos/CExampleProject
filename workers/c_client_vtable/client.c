@@ -6,6 +6,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+char* GenerateWorkerId(char* worker_id_prefix) {
+  /* Calculate buffer size. */
+  char* fmt = "%s%d";
+  int id = rand() % 10000000;
+  int size = snprintf(NULL, 0, fmt, worker_id_prefix, id);
+
+  /* Format string. */
+  char* worker_id = malloc(sizeof(char) * (size + 1));
+  sprintf(worker_id,fmt, worker_id_prefix, id);
+  return worker_id;
+}
+
 /** Op handler functions. */
 void OnLogMessage(const Worker_LogMessageOp* op) {
   printf("log: %s\n", op->message);
@@ -85,6 +97,8 @@ void OnCommandRequest(Worker_Connection* connection, const Worker_CommandRequest
 }
 
 int main(int argc, char** argv) {
+  srand(time(NULL));
+
   if (argc != 4) {
     printf("Usage: %s <hostname> <port> <worker_id>\n", argv[0]);
     printf("Connects to SpatialOS\n");
@@ -96,6 +110,9 @@ int main(int argc, char** argv) {
 
   /* Set up component vtables. */
   Worker_ComponentVtable component_vtables[3] = {0};
+
+  /* Generate worker ID. */
+  char* worker_id = GenerateWorkerId(argv[3]);
 
   /* improbable.Position */
   component_vtables[0].component_id = POSITION_COMPONENT_ID;
@@ -146,9 +163,10 @@ int main(int argc, char** argv) {
   params.component_vtable_count = sizeof(component_vtables) / sizeof(component_vtables[0]);
   params.component_vtables = component_vtables;
   Worker_ConnectionFuture* connection_future =
-      Worker_ConnectAsync(argv[1], atoi(argv[2]), argv[3], &params);
+      Worker_ConnectAsync(argv[1], atoi(argv[2]), worker_id, &params);
   Worker_Connection* connection = Worker_ConnectionFuture_Get(connection_future, NULL);
   Worker_ConnectionFuture_Destroy(connection_future);
+  free(worker_id);
 
   /* Send a test message. */
   Worker_LogMessage message = {WORKER_LOG_LEVEL_WARN, "Client", "Connected successfully", NULL};

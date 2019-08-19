@@ -11,10 +11,10 @@
 #include <improbable/standard_library.h>
 #include <client_data.h>
 
-using ComponentRegistry = worker::Components<improbable::Position, improbable::Metadata>;
+using ComponentRegistry = worker::Components<improbable::Position, improbable::Metadata, improbable::EntityAcl, sample::Login, sample::ClientData>;
 
 const int kErrorExitStatus = 1;
-const std::uint32_t kGetOpListTimeoutInMilliseconds = 100;
+const std::uint32_t kOpListTimeoutMs = 100;
 
 int main(int argc, char** argv) {
     auto print_usage = [&]() {
@@ -80,24 +80,23 @@ int main(int argc, char** argv) {
     });
 
     int tick_count = 0;
-	float angle = 0;
+    float angle = 0;
     while (is_connected) {
-        view.Process(connection.GetOpList(kGetOpListTimeoutInMilliseconds));
+        view.Process(connection.GetOpList(kOpListTimeoutMs));
 
         // Update position of entity.
         angle += 0.5f;
-		improbable::Position::Update position_update;
-		position_update.set_coords({sin(angle) * 10, 0.0, cos(angle) * 10});
-		connection.SendComponentUpdate<improbable::Position>(entityId, position_update);
+        improbable::Position::Update position_update;
+        position_update.set_coords({sin(angle) * 10, 0.0, cos(angle) * 10});
+        connection.SendComponentUpdate<improbable::Position>(entityId, position_update);
 
         // Sleep for some time.
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
         // Send a command every 2 ticks.
-        if (tick_count % 2 == 0) {
+        if (tick_count++ % 2 == 0) {
             connection.SendCommandRequest<sample::ClientData::Commands::TestCommand>(entityId, {10, 1.5f}, {});
         }
-        tick_count++;
     }
 
     return kErrorExitStatus;

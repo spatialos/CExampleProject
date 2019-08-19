@@ -33,15 +33,6 @@ launched with the following commands:
 * Client (direct): `spatial local worker launch client_direct local`
 * Client (vtable): `spatial local worker launch client_vtable local`
 
-No output will be written, but you should see a 2nd worker connect in the inspector. To view the
-printf logging from the C workers, launch the executable directly. For example, on Windows:
-
-```
-./workers/c_client_direct/cmake_build/Debug/ClientDirect.exe localhost 7777 ClientDirect1
-```
-
-(note that the 3rd parameter should be a different string every time you run a worker).
-
 ## Scenario
 
 This project is used to showcase the C API and how it can be used to implement a simple client
