@@ -18,12 +18,12 @@ const std::uint32_t kGetOpListTimeoutInMilliseconds = 100;
 
 int main(int argc, char** argv) {
     auto print_usage = [&]() {
-        std::cout << "Usage: Physics <hostname> <port> <worker_id>" << std::endl;
+        std::cout << "Usage: ./Physics <hostname> <port> <worker_id>" << std::endl;
         std::cout << std::endl;
         std::cout << "Connects to SpatialOS" << std::endl;
         std::cout << "    <hostname>      - hostname of the receptionist to connect to." << std::endl;
         std::cout << "    <port>          - port to use if connecting through the receptionist." << std::endl;
-        std::cout << "    <worker_id>     - (optional) name of the worker assigned by SpatialOS." << std::endl;
+        std::cout << "    <worker_id>     - name of the worker assigned by SpatialOS." << std::endl;
         std::cout << std::endl;
     };
 
@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
         ComponentRegistry{}, std::string{argv[1]}, atoi(argv[2]), argv[3], parameters).Get();
 
     if (connection.GetConnectionStatusCode() != worker::ConnectionStatusCode::kSuccess) {
-        std::cerr << "Failed to connection the receptionist." << std::endl;
+        std::cerr << "Failed to connect to the receptionist." << std::endl;
         std::cerr << "Reason: " << connection.GetConnectionStatusDetailString() << std::endl;
         return kErrorExitStatus;
     }
