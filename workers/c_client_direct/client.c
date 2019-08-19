@@ -98,8 +98,9 @@ void OnCommandRequest(Worker_Connection* connection, const Worker_CommandRequest
 
     float sum = payload1 + payload2;
     Worker_CommandResponse response = {0};
+    response.command_index = command_index;
     response.component_id = op->request.component_id;
-    response.schema_type = Schema_CreateCommandResponse(op->request.component_id, command_index);
+    response.schema_type = Schema_CreateCommandResponse();
     Schema_Object* response_object = Schema_GetCommandResponseObject(response.schema_type);
     Schema_AddFloat(response_object, 1, sum);
     Worker_Connection_SendCommandResponse(connection, op->request_id, &response);
@@ -156,7 +157,7 @@ int main(int argc, char** argv) {
   memset(&command_request, 0, sizeof(command_request));
   command_request.component_id = LOGIN_COMPONENT_ID;
   command_request.command_index = 1;
-  command_request.schema_type = Schema_CreateCommandRequest(LOGIN_COMPONENT_ID, 1);
+  command_request.schema_type = Schema_CreateCommandRequest();
   Worker_CommandParameters command_parameters;
   command_parameters.allow_short_circuit = 0;
   Worker_Connection_SendCommandRequest(connection, 1, &command_request, NULL, &command_parameters);
