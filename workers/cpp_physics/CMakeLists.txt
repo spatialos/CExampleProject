@@ -1,20 +1,20 @@
-# Builds a SpatialOS worker using the C API
+# Builds a SpatialOS worker using the C++ API
 
 # Replace project name below with your own worker name
 # !!! This needs to match the artifact_name in spatialos.<name>.worker.json
 # !!! because ${PROJECT_NAME} is used below when creating the zip target
-project(ClientDirect C)
-cmake_minimum_required(VERSION 3.0)
+project(Physics)
+cmake_minimum_required(VERSION 3.1)
 
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(APPLICATION_ROOT "${PROJECT_SOURCE_DIR}/../..")
 set(WORKER_SDK_DIR "${APPLICATION_ROOT}/dependencies")
 
 if(MSVC)
-  add_definitions(/W4)
+  add_definitions(/W2 /bigobj)
 else()
   add_definitions(-Wall -Wextra -Werror -pedantic -Wno-unused-parameter -Wno-missing-field-initializers -Wno-missing-braces)
 endif()
@@ -23,9 +23,12 @@ endif()
 add_subdirectory(${WORKER_SDK_DIR} "${CMAKE_CURRENT_BINARY_DIR}/WorkerSdk")
 
 # The worker binary.
-add_executable(${PROJECT_NAME} client.c)
-set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD 99)
-target_link_libraries(${PROJECT_NAME} CWorker)
+file(GLOB_RECURSE GENERATED_CODE_FILES
+    "generated_code/*.cc"
+    "generated_code/*.h")
+add_executable(${PROJECT_NAME} physics.cc ${GENERATED_CODE_FILES})
+target_include_directories(${PROJECT_NAME} PRIVATE generated_code)
+target_link_libraries(${PROJECT_NAME} CppWorker)
 
 # Set artifact subdirectories.
 # WORKER_BUILD_DIR should not be changed so that spatial local launch
