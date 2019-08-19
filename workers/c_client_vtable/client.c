@@ -88,6 +88,7 @@ void OnCommandRequest(Worker_Connection* connection, const Worker_CommandRequest
     response_data.sum = request->payload1 + request->payload2;
 
     Worker_CommandResponse response = {0};
+    response.command_index = command_index;
     response.component_id = op->request.component_id;
     response.user_handle = CreateCommandObject(1, &response_data);
     Worker_Connection_SendCommandResponse(connection, op->request_id, &response);

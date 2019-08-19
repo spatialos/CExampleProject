@@ -41,7 +41,7 @@ void Improbable_Position_ComponentDataSerialize(Worker_ComponentId component_id,
                                                 Worker_ComponentDataHandle* handle,
                                                 Schema_ComponentData** target_out) {
   Improbable_Position* data = (Improbable_Position*)handle;
-  *target_out = Schema_CreateComponentData(POSITION_COMPONENT_ID);
+  *target_out = Schema_CreateComponentData();
   Schema_Object* fields = Schema_GetComponentDataFields(*target_out);
   Schema_Object* coords_object = Schema_AddObject(fields, 1);
   Schema_AddDouble(coords_object, 1, data->coords.x);
@@ -91,7 +91,7 @@ void Improbable_Position_ComponentUpdateSerialize(Worker_ComponentId component_i
                                                   Worker_ComponentUpdateHandle* handle,
                                                   Schema_ComponentUpdate** target_out) {
   Improbable_PositionUpdate* update = (Improbable_PositionUpdate*)handle;
-  *target_out = Schema_CreateComponentUpdate(POSITION_COMPONENT_ID);
+  *target_out = Schema_CreateComponentUpdate();
   Schema_Object* fields = Schema_GetComponentUpdateFields(*target_out);
   if (update->coords) {
     update->coords = (Improbable_Coords*)malloc(sizeof(Improbable_Coords));
@@ -152,7 +152,7 @@ void Sample_Login_CommandRequestSerialize(Worker_ComponentId component_id,
   if (command_object->command_index == 1) {
     Sample_Login_TakeControl_Request* data =
         (Sample_Login_TakeControl_Request*)command_object->data;
-    *target_out = Schema_CreateCommandRequest(LOGIN_COMPONENT_ID, 1);
+    *target_out = Schema_CreateCommandRequest();
     (void)data;
   } else {
     /* We don't handle any other command index for this component. */
@@ -209,7 +209,7 @@ void Sample_Login_CommandResponseSerialize(Worker_ComponentId component_id,
   if (command_object->command_index == 1) {
     Sample_Login_TakeControl_Response* data =
         (Sample_Login_TakeControl_Response*)command_object->data;
-    *target_out = Schema_CreateCommandResponse(LOGIN_COMPONENT_ID, 1);
+    *target_out = Schema_CreateCommandResponse();
     (void)data;
   } else {
     /* We don't handle any other command index for this component. */
@@ -272,7 +272,7 @@ void Sample_ClientData_CommandRequestSerialize(Worker_ComponentId component_id,
   if (command_object->command_index == 1) {
     Sample_ClientData_TestCommand_Request* data =
         (Sample_ClientData_TestCommand_Request*)command_object->data;
-    *target_out = Schema_CreateCommandRequest(CLIENTDATA_COMPONENT_ID, 1);
+    *target_out = Schema_CreateCommandRequest();
     Schema_Object* fields = Schema_GetCommandRequestObject(*target_out);
     Schema_AddInt32(fields, 1, data->payload1);
     Schema_AddFloat(fields, 2, data->payload2);
@@ -337,7 +337,7 @@ void Sample_ClientData_CommandResponseSerialize(Worker_ComponentId component_id,
   if (command_object->command_index == 1) {
     Sample_ClientData_TestCommand_Response* data =
         (Sample_ClientData_TestCommand_Response*)command_object->data;
-    *target_out = Schema_CreateCommandResponse(CLIENTDATA_COMPONENT_ID, 1);
+    *target_out = Schema_CreateCommandResponse();
     Schema_Object* fields = Schema_GetCommandResponseObject(*target_out);
     Schema_AddFloat(fields, 1, data->sum);
   } else {
@@ -374,7 +374,7 @@ void Sample_ClientData_ComponentDataSerialize(Worker_ComponentId component_id, v
                                               Worker_ComponentDataHandle* handle,
                                               Schema_ComponentData** target_out) {
   Sample_ClientData* data = (Sample_ClientData*)handle;
-  *target_out = Schema_CreateComponentData(CLIENTDATA_COMPONENT_ID);
+  *target_out = Schema_CreateComponentData();
   Schema_Object* fields = Schema_GetComponentDataFields(*target_out);
   Schema_AddFloat(fields, 1, data->input_state);
 }
@@ -418,7 +418,7 @@ void Sample_ClientData_ComponentUpdateSerialize(Worker_ComponentId component_id,
                                                 Worker_ComponentUpdateHandle* handle,
                                                 Schema_ComponentUpdate** target_out) {
   Sample_ClientDataUpdate* update = (Sample_ClientDataUpdate*)handle;
-  *target_out = Schema_CreateComponentUpdate(CLIENTDATA_COMPONENT_ID);
+  *target_out = Schema_CreateComponentUpdate();
   Schema_Object* fields = Schema_GetComponentUpdateFields(*target_out);
   if (update->input_state) {
     Schema_AddFloat(fields, 1, *update->input_state);
