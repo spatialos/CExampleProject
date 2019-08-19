@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 char* GenerateWorkerId(char* worker_id_prefix) {
   /* Calculate buffer size. */

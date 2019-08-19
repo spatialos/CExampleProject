@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define POSITION_COMPONENT_ID 54
 #define LOGIN_COMPONENT_ID 1000
