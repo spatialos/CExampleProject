@@ -25,10 +25,10 @@ void OnEntityQueryResponse(const Worker_EntityQueryResponseOp* op) {
     for (uint32_t i = 0; i < op->result_count; ++i) {
       const Worker_Entity* entity = &op->results[i];
       printf("- entity %" PRId64 " with %d components", entity->entity_id, entity->component_count);
-      for (uint32_t i = 0; i < entity->component_count; ++i) {
-        if (entity->components[i].component_id == POSITION_COMPONENT_ID) {
+      for (uint32_t k = 0; k < entity->component_count; ++k) {
+        if (entity->components[k].component_id == POSITION_COMPONENT_ID) {
           Schema_Object* coords_object =
-              Schema_GetObject(Schema_GetComponentDataFields(entity->components[i].schema_type), 1);
+              Schema_GetObject(Schema_GetComponentDataFields(entity->components[k].schema_type), 1);
           double x = Schema_GetDouble(coords_object, 1);
           double y = Schema_GetDouble(coords_object, 2);
           double z = Schema_GetDouble(coords_object, 3);
@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
   params.network.tcp.multiplex_level = 4;
   params.default_component_vtable = &default_vtable;
   Worker_ConnectionFuture* connection_future =
-      Worker_ConnectAsync(argv[1], atoi(argv[2]), argv[3], &params);
+      Worker_ConnectAsync(argv[1], (uint16_t)atoi(argv[2]), argv[3], &params);
   Worker_Connection* connection = Worker_ConnectionFuture_Get(connection_future, NULL);
   Worker_ConnectionFuture_Destroy(connection_future);
 

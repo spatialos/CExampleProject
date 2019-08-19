@@ -10,7 +10,7 @@ set(APPLICATION_ROOT "${PROJECT_SOURCE_DIR}/../..")
 set(WORKER_SDK_DIR "${APPLICATION_ROOT}/dependencies")
 
 if(MSVC)
-  add_definitions(/W2)
+  add_definitions(/W4)
 else()
   add_definitions(-Wall -Wextra -Werror -pedantic -Wno-unused-parameter -Wno-missing-field-initializers -Wno-missing-braces)
 endif()
