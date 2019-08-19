@@ -163,7 +163,7 @@ int main(int argc, char** argv) {
   params.component_vtable_count = sizeof(component_vtables) / sizeof(component_vtables[0]);
   params.component_vtables = component_vtables;
   Worker_ConnectionFuture* connection_future =
-      Worker_ConnectAsync(argv[1], atoi(argv[2]), worker_id, &params);
+      Worker_ConnectAsync(argv[1], (uint16_t)atoi(argv[2]), worker_id, &params);
   Worker_Connection* connection = Worker_ConnectionFuture_Get(connection_future, NULL);
   Worker_ConnectionFuture_Destroy(connection_future);
   free(worker_id);
