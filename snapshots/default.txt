@@ -45,6 +45,26 @@ entity {
         field3_z: 0
       }
     }
+    [schema.improbable.Interest.component_extension] {
+      field1_component_interest {
+        key: 54,
+        value {
+          field1_queries: {
+            field1_constraint: {
+              field1_sphere_constraint: {
+                field1_center: {
+                  field1_x: 0
+                  field2_y: 0
+                  field3_z: 0
+                }
+                field2_radius: 100
+              }
+            }
+            field2_full_snapshot_result: true
+          }
+        }
+      }
+    }
     [schema.improbable.Persistence.component_extension] {
     }
     [schema.sample.Login.component_extension] {
