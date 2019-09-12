@@ -40,6 +40,8 @@ int main(int argc, char** argv) {
     parameters.Network.UseExternalIp = false;
     parameters.Network.ModularUdp.DownstreamKcp = worker::alpha::KcpParameters{};
     parameters.Network.ModularUdp.UpstreamKcp = worker::alpha::KcpParameters{};
+    parameters.ProtocolLogging.LogPrefix = "/home/david/Work/CExampleProject/physics-";
+    parameters.EnableProtocolLoggingAtStartup = true;
     worker::Connection connection = worker::Connection::ConnectAsync(
         ComponentRegistry{}, std::string{argv[1]}, atoi(argv[2]), argv[3], parameters).Get();
 
