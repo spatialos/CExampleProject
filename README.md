@@ -51,11 +51,11 @@ begin to send a simple command to the client every few seconds.
 
 ## Snapshot
 
-The snapshot exists in both text and binary format in the `snapshots` folder. There is no script
-to generate the snapshot as the snapshot was written by hand in the text format, but it's possible
-to make simple changes to the text format and regenerate the binary snapshot from it. To update the
+The snapshot exists in both json and binary format in the `snapshots` folder. There is no script
+to generate the snapshot as the snapshot was written by hand in the json format, but it's possible
+to make simple changes to the json format and regenerate the binary snapshot from it. To update the
 binary snapshot after making a change, run the following command:
 
 ```
-spatial project history snapshot convert --input-format=text --input=snapshots/default.txt --output-format=binary --output=snapshots/default.snapshot
+spatial project history snapshot convert --input-format=text --input=snapshots/default.json --output-format=binary --output=snapshots/default.snapshot
 ```
