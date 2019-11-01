@@ -67,6 +67,9 @@
             "z": 0.0
         }
     },
+    "improbable.Metadata": {
+        "entity_type":"TestEntity"
+    },
     "sample.ClientData": {
         "input_state": 0.5
     },
