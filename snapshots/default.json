@@ -1,0 +1,74 @@
+{
+    "__entity_id": "1",
+    "improbable.EntityAcl": {
+        "component_write_acl": [
+            {
+                "key": 54,
+                "value": {
+                    "attribute_set": [
+                        {
+                            "attribute": [
+                                "physics"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "key": 50,
+                "value": {
+                    "attribute_set": [
+                        {
+                            "attribute": [
+                                "physics"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "key": 1000,
+                "value": {
+                    "attribute_set": [
+                        {
+                            "attribute": [
+                                "physics"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+        "read_acl": {
+            "attribute_set": [
+                {
+                    "attribute": [
+                        "physics"
+                    ]
+                },
+                {
+                    "attribute": [
+                        "client_direct"
+                    ]
+                },
+                {
+                    "attribute": [
+                        "client_vtable"
+                    ]
+                }
+            ]
+        }
+    },
+    "improbable.Persistence": {},
+    "improbable.Position": {
+        "coords": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "sample.ClientData": {
+        "input_state": 0.5
+    },
+    "sample.Login": {}
+}
