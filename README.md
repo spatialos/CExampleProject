@@ -47,13 +47,14 @@ component). The C++ worker then modifies the entity's write ACLs to delegate com
 (`sample.ClientData`) to the client, using the `CallerWorkerAttributes` field of the
 `CommandRequestOp`. This causes the entity to be checked out by the client worker, and the client
 worker will begin to receive component updates for position changes. The physics worker will also
-begin to send a simple command to the client every few seconds.
+begin to send a simple command to the client every few seconds. Due to the entity's QBI query,
+the client worker will check in/out another entity due to its movement.
 
 ## Snapshot
 
-The snapshot exists in both json and binary format in the `snapshots` folder. There is no script
-to generate the snapshot as the snapshot was written by hand in the json format, but it's possible
-to make simple changes to the json format and regenerate the binary snapshot from it. To update the
+The snapshot exists in both JSON and binary format in the `snapshots` folder. There is no script
+to generate the snapshot as the snapshot was written by hand in JSON format, but it's possible
+to make simple changes to the JSON snapshot and regenerate the binary snapshot from it. To update the
 binary snapshot after making a change, run the following command:
 
 ```

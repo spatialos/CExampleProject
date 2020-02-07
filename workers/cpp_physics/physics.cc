@@ -89,7 +89,7 @@ int main(int argc, char** argv) {
         // Update position of entity.
         angle += 0.5f;
         improbable::Position::Update position_update;
-        position_update.set_coords({sin(angle) * 10, 0.0, cos(angle) * 10});
+        position_update.set_coords({sin(angle) * 100, 0.0, cos(angle) * 100});
         connection.SendComponentUpdate<improbable::Position>(entityId, position_update);
 
         // Sleep for some time.

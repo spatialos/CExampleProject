@@ -55,6 +55,14 @@ void OnEntityQueryResponse(const Worker_EntityQueryResponseOp* op) {
   }
 }
 
+void OnAddEntity(const Worker_AddEntityOp* op) {
+    printf("received add entity op (entity: %" PRId64 ")\n", op->entity_id);
+}
+
+void OnRemoveEntity(const Worker_RemoveEntityOp* op) {
+    printf("received remove entity op (entity: %" PRId64 ")\n", op->entity_id);
+}
+
 void OnAddComponent(const Worker_AddComponentOp* op) {
   printf("received add component op (entity: %" PRId64 ", component: %d)\n", op->entity_id,
          op->data.component_id);
@@ -187,6 +195,12 @@ int main(int argc, char** argv) {
       case WORKER_OP_TYPE_ENTITY_QUERY_RESPONSE:
         OnEntityQueryResponse(&op->op.entity_query_response);
         break;
+      case WORKER_OP_TYPE_ADD_ENTITY:
+          OnAddEntity(&op->op.add_entity);
+          break;
+      case WORKER_OP_TYPE_REMOVE_ENTITY:
+          OnRemoveEntity(&op->op.remove_entity);
+          break;
       case WORKER_OP_TYPE_ADD_COMPONENT:
         OnAddComponent(&op->op.add_component);
         break;
