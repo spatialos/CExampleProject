@@ -36,10 +36,10 @@ int main(int argc, char** argv) {
 
     worker::ConnectionParameters parameters;
     parameters.WorkerType = "physics";
-    parameters.Network.ConnectionType = worker::NetworkConnectionType::kModularUdp;
+    parameters.Network.ConnectionType = worker::NetworkConnectionType::kModularKcp;
     parameters.Network.UseExternalIp = false;
-    parameters.Network.ModularUdp.DownstreamKcp = worker::alpha::KcpParameters{};
-    parameters.Network.ModularUdp.UpstreamKcp = worker::alpha::KcpParameters{};
+    parameters.Network.ModularKcp.DownstreamKcp = worker::KcpTransportParameters{};
+    parameters.Network.ModularKcp.UpstreamKcp = worker::KcpTransportParameters{};
     worker::Connection connection = worker::Connection::ConnectAsync(
         ComponentRegistry{}, std::string{argv[1]}, atoi(argv[2]), argv[3], parameters).Get();
 

@@ -129,17 +129,16 @@ int main(int argc, char** argv) {
 
   /* Connect to SpatialOS. */
   Worker_ConnectionParameters params = Worker_DefaultConnectionParameters();
-  params.network.connection_type = WORKER_NETWORK_CONNECTION_TYPE_MODULAR_UDP;
-  params.network.modular_udp.security_type = 0;
-  Worker_Alpha_KcpParameters kcp_parameters;
+  params.network.connection_type = WORKER_NETWORK_CONNECTION_TYPE_KCP;
+  params.network.modular_kcp.security_type = 0;
+  Worker_KcpTransportParameters kcp_parameters;
   kcp_parameters.early_retransmission = WORKER_DEFAULTS_KCP_EARLY_RETRANSMISSION;
   kcp_parameters.fast_retransmission = WORKER_DEFAULTS_KCP_FAST_RETRANSMISSION;
   kcp_parameters.min_rto_millis = WORKER_DEFAULTS_KCP_MIN_RTO_MILLIS;
-  kcp_parameters.multiplex_level = WORKER_DEFAULTS_KCP_MULTIPLEX_LEVEL;
-  kcp_parameters.non_concessional_flow_control = WORKER_DEFAULTS_KCP_NON_CONCESSIONAL_FLOW_CONTROL;
-  kcp_parameters.update_interval_millis = WORKER_DEFAULTS_KCP_UPDATE_INTERVAL_MILLIS;
-  params.network.modular_udp.upstream_kcp = &kcp_parameters;
-  params.network.modular_udp.downstream_kcp = &kcp_parameters;
+  kcp_parameters.disable_congestion_control = WORKER_DEFAULTS_KCP_DISABLE_CONGESTION_CONTROL;
+  kcp_parameters.flush_interval_millis = WORKER_DEFAULTS_KCP_UPDATE_INTERVAL_MILLIS;
+  params.network.modular_kcp.upstream_kcp = kcp_parameters;
+  params.network.modular_kcp.downstream_kcp = kcp_parameters;
   params.worker_type = "client_direct";
   params.network.tcp.multiplex_level = 4;
   params.default_component_vtable = &default_vtable;

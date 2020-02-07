@@ -13,3 +13,6 @@ dependencies/worker_sdk
 
 # VS Code
 .vscode
+
+.idea
+cmake-build-debug
