@@ -196,11 +196,11 @@ int main(int argc, char** argv) {
         OnEntityQueryResponse(&op->op.entity_query_response);
         break;
       case WORKER_OP_TYPE_ADD_ENTITY:
-          OnAddEntity(&op->op.add_entity);
-          break;
+        OnAddEntity(&op->op.add_entity);
+        break;
       case WORKER_OP_TYPE_REMOVE_ENTITY:
-          OnRemoveEntity(&op->op.remove_entity);
-          break;
+        OnRemoveEntity(&op->op.remove_entity);
+        break;
       case WORKER_OP_TYPE_ADD_COMPONENT:
         OnAddComponent(&op->op.add_component);
         break;
