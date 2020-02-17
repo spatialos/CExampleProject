@@ -1,144 +1,144 @@
 {
-    "__entity_id": "1",
-    "improbable.EntityAcl": {
-        "component_write_acl": [
+  "__entity_id": "1",
+  "improbable.EntityAcl": {
+    "component_write_acl": [
+      {
+        "key": 54,
+        "value": {
+          "attribute_set": [
             {
-                "key": 54,
-                "value": {
-                    "attribute_set": [
-                        {
-                            "attribute": [
-                                "physics"
-                            ]
-                        }
-                    ]
-                }
-            },
-            {
-                "key": 50,
-                "value": {
-                    "attribute_set": [
-                        {
-                            "attribute": [
-                                "physics"
-                            ]
-                        }
-                    ]
-                }
-            },
-            {
-                "key": 1000,
-                "value": {
-                    "attribute_set": [
-                        {
-                            "attribute": [
-                                "physics"
-                            ]
-                        }
-                    ]
-                }
+              "attribute": [
+                "physics"
+              ]
             }
-        ],
-        "read_acl": {
-            "attribute_set": [
-                {
-                    "attribute": [
-                        "physics"
-                    ]
-                },
-                {
-                    "attribute": [
-                        "client_direct"
-                    ]
-                },
-                {
-                    "attribute": [
-                        "client_vtable"
-                    ]
-                }
-            ]
+          ]
         }
-    },
-    "improbable.Interest": {
-        "component_interest": [
+      },
+      {
+        "key": 50,
+        "value": {
+          "attribute_set": [
             {
-                "key": 1001,
-                "value": {
-                    "queries": [
-                        {
-                            "constraint": {
-                                "and_constraint": [],
-                                "box_constraint": [],
-                                "component_constraint": [],
-                                "cylinder_constraint": [],
-                                "entity_id_constraint": [],
-                                "or_constraint": [],
-                                "relative_box_constraint": [],
-                                "relative_cylinder_constraint": [],
-                                "relative_sphere_constraint": [
-                                    {
-                                        "radius": 50.0
-                                    }
-                                ],
-                                "sphere_constraint": []
-                            },
-                            "frequency": [],
-                            "full_snapshot_result": [
-                                true
-                            ],
-                            "result_component_id": []
-                        }
-                    ]
-                }
+              "attribute": [
+                "physics"
+              ]
             }
-        ]
-    },
-    "improbable.Persistence": {},
-    "improbable.Position": {
-        "coords": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+          ]
         }
-    },
-    "improbable.Metadata": {
-        "entity_type":"TestEntity"
-    },
-    "sample.ClientData": {
-        "input_state": 0.5
-    },
-    "sample.Login": {}
+      },
+      {
+        "key": 1000,
+        "value": {
+          "attribute_set": [
+            {
+              "attribute": [
+                "physics"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "read_acl": {
+      "attribute_set": [
+        {
+          "attribute": [
+            "physics"
+          ]
+        },
+        {
+          "attribute": [
+            "client_direct"
+          ]
+        },
+        {
+          "attribute": [
+            "client_vtable"
+          ]
+        }
+      ]
+    }
+  },
+  "improbable.Interest": {
+    "component_interest": [
+      {
+        "key": 1001,
+        "value": {
+          "queries": [
+            {
+              "constraint": {
+                "and_constraint": [],
+                "box_constraint": [],
+                "component_constraint": [],
+                "cylinder_constraint": [],
+                "entity_id_constraint": [],
+                "or_constraint": [],
+                "relative_box_constraint": [],
+                "relative_cylinder_constraint": [],
+                "relative_sphere_constraint": [
+                  {
+                    "radius": 50.0
+                  }
+                ],
+                "sphere_constraint": []
+              },
+              "frequency": [],
+              "full_snapshot_result": [
+                true
+              ],
+              "result_component_id": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "improbable.Metadata": {
+    "entity_type":"TestEntity"
+  },
+  "improbable.Persistence": {},
+  "improbable.Position": {
+    "coords": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  },
+  "sample.ClientData": {
+    "input_state": 0.5
+  },
+  "sample.Login": {}
 }
 {
-    "__entity_id": "2",
-    "improbable.EntityAcl": {
-        "component_write_acl": [],
-        "read_acl": {
-            "attribute_set": [
-                {
-                    "attribute": [
-                        "physics"
-                    ]
-                },
-                {
-                    "attribute": [
-                        "client_direct"
-                    ]
-                },
-                {
-                    "attribute": [
-                        "client_vtable"
-                    ]
-                }
-            ]
+  "__entity_id": "2",
+  "improbable.EntityAcl": {
+    "component_write_acl": [],
+    "read_acl": {
+      "attribute_set": [
+        {
+          "attribute": [
+            "physics"
+          ]
+        },
+        {
+          "attribute": [
+            "client_direct"
+          ]
+        },
+        {
+          "attribute": [
+            "client_vtable"
+          ]
         }
-    },
-    "improbable.Persistence": {},
-    "improbable.Position": {
-        "coords": {
-            "x": 100.0,
-            "y": 0.0,
-            "z": 0.0
-        }
+      ]
     }
+  },
+  "improbable.Persistence": {},
+  "improbable.Position": {
+    "coords": {
+      "x": 100.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  }
 }

@@ -38,8 +38,6 @@ int main(int argc, char** argv) {
     parameters.WorkerType = "physics";
     parameters.Network.ConnectionType = worker::NetworkConnectionType::kModularKcp;
     parameters.Network.UseExternalIp = false;
-    parameters.Network.ModularKcp.DownstreamKcp = worker::KcpTransportParameters{};
-    parameters.Network.ModularKcp.UpstreamKcp = worker::KcpTransportParameters{};
     worker::Connection connection = worker::Connection::ConnectAsync(
         ComponentRegistry{}, std::string{argv[1]}, atoi(argv[2]), argv[3], parameters).Get();
 
@@ -82,7 +80,7 @@ int main(int argc, char** argv) {
     });
 
     int tick_count = 0;
-    float angle = 0;
+    double angle = 0;
     while (is_connected) {
         view.Process(connection.GetOpList(kOpListTimeoutMs));
 
