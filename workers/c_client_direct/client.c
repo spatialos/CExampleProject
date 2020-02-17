@@ -137,7 +137,7 @@ int main(int argc, char** argv) {
 
   /* Connect to SpatialOS. */
   Worker_ConnectionParameters params = Worker_DefaultConnectionParameters();
-  params.network.connection_type = WORKER_NETWORK_CONNECTION_TYPE_KCP;
+  params.network.connection_type = WORKER_NETWORK_CONNECTION_TYPE_MODULAR_KCP;
   params.network.modular_kcp.security_type = 0;
   Worker_KcpTransportParameters kcp_parameters;
   kcp_parameters.early_retransmission = WORKER_DEFAULTS_KCP_EARLY_RETRANSMISSION;
