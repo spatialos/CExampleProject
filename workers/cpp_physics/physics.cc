@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 
     worker::ConnectionParameters parameters;
     parameters.WorkerType = "physics";
-    parameters.Network.ConnectionType = worker::NetworkConnectionType::kTcp;
+    parameters.Network.ConnectionType = worker::NetworkConnectionType::kModularKcp;
     parameters.Network.UseExternalIp = false;
     worker::Connection connection = worker::Connection::ConnectAsync(
         ComponentRegistry{}, std::string{argv[1]}, atoi(argv[2]), argv[3], parameters).Get();
@@ -80,14 +80,14 @@ int main(int argc, char** argv) {
     });
 
     int tick_count = 0;
-    float angle = 0;
+    double angle = 0.0;
     while (is_connected) {
         view.Process(connection.GetOpList(kOpListTimeoutMs));
 
         // Update position of entity.
-        angle += 0.5f;
+        angle += 0.5;
         improbable::Position::Update position_update;
-        position_update.set_coords({sin(angle) * 10, 0.0, cos(angle) * 10});
+        position_update.set_coords({std::sin(angle) * 100.0, 0.0, std::cos(angle) * 100.0});
         connection.SendComponentUpdate<improbable::Position>(entityId, position_update);
 
         // Sleep for some time.
