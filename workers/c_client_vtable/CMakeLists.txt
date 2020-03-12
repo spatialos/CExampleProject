@@ -4,7 +4,7 @@
 # !!! This needs to match the artifact_name in spatialos.<name>.worker.json
 # !!! because ${PROJECT_NAME} is used below when creating the zip target
 project(ClientVtable C)
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.7)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)

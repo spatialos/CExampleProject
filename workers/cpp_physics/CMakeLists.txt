@@ -4,7 +4,7 @@
 # !!! This needs to match the artifact_name in spatialos.<name>.worker.json
 # !!! because ${PROJECT_NAME} is used below when creating the zip target
 project(Physics)
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.7)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
