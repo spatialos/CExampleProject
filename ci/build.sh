@@ -76,7 +76,7 @@ if [[ "$SPATIAL_PLATFORM" == "linux" ]]; then
     --env TOOLS_DIR=/build/tools \
     --volume "${AUTH_DIR}":/build/auth \
     --env AUTH_DIR=/build/auth \
-    --volume $(realpath $(pwd)):/code \
+    --volume $(pwd):/code \
     --workdir /code \
     c_exampe_project_image \
     /bin/bash -c 'export PATH="/code/ci:${PATH}"; \

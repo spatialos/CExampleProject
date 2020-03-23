@@ -38,7 +38,7 @@ windows_agent: &windows_agent
     - "permission_set=builder"
     - "platform=windows"
     - "scaler_version=2"
-    - "queue=${CI_WINDOWS_BUILDER_QUEUE:-v4-20-03-20-134040-bk9771-f2083ed7-d}"
+    - "queue=${CI_WINDOWS_BUILDER_QUEUE:-v4-20-03-23-115927-bk9815-bce0c4a4}"
   <<: *common
 
 steps:
