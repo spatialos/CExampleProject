@@ -36,18 +36,10 @@ else
 fi
 
 # Create temporary directories for the spatial binary and authentication token.
-export TOOLS_DIR="$(pwd)/tools"
-export AUTH_DIR="$(pwd)/auth"
-
-function cleanup() {
-  rm -rf "$TOOLS_DIR"
-  rm -rf "$AUTH_DIR"
-}
-
-trap cleanup INT TERM EXIT
+export TOOLS_DIR="$(mktemp -d)"
+export AUTH_DIR="$(mktemp -d)"
 
 # Retrieve the authentication token.
-mkdir -p "$AUTH_DIR"
 if [[ "$SPATIAL_PLATFORM" == "macos" ]]; then
   imp-vault read-key \
       --environment=production \
@@ -66,7 +58,6 @@ else
 fi
 
 # Retrieve the spatial binary.
-mkdir -p "$TOOLS_DIR"
 curl -Ls -o "${TOOLS_DIR}/${SPATIAL_BINARY}.tmp" "https://console.improbable.io/toolbelt/download/${SPATIALOS_TOOLBELT_VERSION}/${TOOLBELT_PLATFORM}" || exit 1
 chmod +x "${TOOLS_DIR}/${SPATIAL_BINARY}.tmp"
 mv "${TOOLS_DIR}/${SPATIAL_BINARY}.tmp" "${TOOLS_DIR}/${SPATIAL_BINARY}"
@@ -76,7 +67,9 @@ if [[ "$SPATIAL_PLATFORM" == "linux" ]]; then
   docker build -t c_exampe_project_image -f ci/Dockerfile .
   docker run \
     --volume "${TOOLS_DIR}":/build/tools \
+    --env TOOLS_DIR=/build/tools \
     --volume "${AUTH_DIR}":/build/auth \
+    --env AUTH_DIR=/build/auth \
     c_exampe_project_image \
     spatial build --target $SPATIAL_PLATFORM
 else
