@@ -64,14 +64,23 @@ mv "${TOOLS_DIR}/${SPATIAL_BINARY}.tmp" "${TOOLS_DIR}/${SPATIAL_BINARY}"
 
 # Build
 if [[ "$SPATIAL_PLATFORM" == "linux" ]]; then
-  docker build -t c_exampe_project_image -f ci/Dockerfile .
+  docker build \
+    -t c_exampe_project_image \
+    -f ci/Dockerfile \
+    --build-arg USER_ID=$(id -u) \
+    --build-arg GROUP_ID=$(id -g) \
+    .
   docker run \
+    --rm \
     --volume "${TOOLS_DIR}":/build/tools \
     --env TOOLS_DIR=/build/tools \
     --volume "${AUTH_DIR}":/build/auth \
     --env AUTH_DIR=/build/auth \
+    --volume $(realpath $(pwd)):/code \
+    --workdir /code \
     c_exampe_project_image \
-    spatial build --target $SPATIAL_PLATFORM
+    /bin/bash -c "export PATH=\"/code/ci:\${PATH}\"; \
+      spatial build --target $SPATIAL_PLATFORM"
 else
   # Add the spatial wrapper script to the path.
   export PATH="$(pwd)/ci":"$PATH"

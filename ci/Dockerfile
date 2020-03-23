@@ -7,8 +7,9 @@ RUN apt-get update \
         gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Add the spatial wrapper script to the PATH.
-ENV PATH "$PATH:/build/project/ci"
+ARG USER_ID
+ARG GROUP_ID
 
-COPY ./ ./build/project
-WORKDIR /build/project
+RUN addgroup --gid $GROUP_ID user \
+    && adduser --disabled-password --uid $USER_ID --gid $GROUP_ID user
+USER user
