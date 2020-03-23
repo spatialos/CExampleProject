@@ -36,8 +36,8 @@ else
 fi
 
 # Create temporary directories for the spatial binary and authentication token.
-export TOOLS_DIR="$(mktemp -d)"
 export AUTH_DIR="$(mktemp -d)"
+export TOOLS_DIR="$(mktemp -d)"
 
 # Retrieve the authentication token.
 if [[ "$SPATIAL_PLATFORM" == "macos" ]]; then
@@ -79,8 +79,8 @@ if [[ "$SPATIAL_PLATFORM" == "linux" ]]; then
     --volume $(realpath $(pwd)):/code \
     --workdir /code \
     c_exampe_project_image \
-    /bin/bash -c "export PATH=\"/code/ci:\${PATH}\"; \
-      spatial build --target $SPATIAL_PLATFORM"
+    /bin/bash -c 'export PATH="/code/ci:${PATH}"; \
+      spatial build --target '"$SPATIAL_PLATFORM"
 else
   # Add the spatial wrapper script to the path.
   export PATH="$(pwd)/ci":"$PATH"
