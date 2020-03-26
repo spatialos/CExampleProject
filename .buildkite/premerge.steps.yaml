@@ -20,7 +20,7 @@ linux_agent: &linux_agent
     - "platform=linux"
     - "scaler_version=2"
     - "machine_type=half"
-    - "queue=${CI_LINUX_BUILDER_QUEUE:-v4-20-02-18-132251-bk8410-2dfa8e1336170745}"
+    - "queue=${CI_LINUX_BUILDER_QUEUE:-v4-20-03-23-110204-bk9814-9f960b76}"
   <<: *common
 
 macos_agent: &macos_agent
@@ -38,7 +38,7 @@ windows_agent: &windows_agent
     - "permission_set=builder"
     - "platform=windows"
     - "scaler_version=2"
-    - "queue=${CI_WINDOWS_BUILDER_QUEUE:-v4-20-03-23-115927-bk9815-bce0c4a4}"
+    - "queue=${CI_WINDOWS_BUILDER_QUEUE:-v4-20-03-25-183029-bk9912-014014bb}"
   <<: *common
 
 steps:
