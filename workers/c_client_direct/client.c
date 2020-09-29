@@ -56,11 +56,11 @@ void OnEntityQueryResponse(const Worker_EntityQueryResponseOp* op) {
 }
 
 void OnAddEntity(const Worker_AddEntityOp* op) {
-    printf("received add entity op (entity: %" PRId64 ")\n", op->entity_id);
+  printf("received add entity op (entity: %" PRId64 ")\n", op->entity_id);
 }
 
 void OnRemoveEntity(const Worker_RemoveEntityOp* op) {
-    printf("received remove entity op (entity: %" PRId64 ")\n", op->entity_id);
+  printf("received remove entity op (entity: %" PRId64 ")\n", op->entity_id);
 }
 
 void OnAddComponent(const Worker_AddComponentOp* op) {
@@ -125,7 +125,9 @@ int main(int argc, char** argv) {
     printf("Connects to SpatialOS\n");
     printf("    <hostname>      - hostname of the receptionist to connect to.\n");
     printf("    <port>          - port to use\n");
-    printf("    <worker_id>     - name of the worker assigned by SpatialOS. A random prefix will be added to it to ensure uniqueness.\n");
+    printf(
+        "    <worker_id>     - name of the worker assigned by SpatialOS. A random prefix will be "
+        "added to it to ensure uniqueness.\n");
     return EXIT_FAILURE;
   }
 
@@ -147,6 +149,14 @@ int main(int argc, char** argv) {
   Worker_Connection* connection = Worker_ConnectionFuture_Get(connection_future, NULL);
   Worker_ConnectionFuture_Destroy(connection_future);
   free(worker_id);
+
+  if (Worker_Connection_GetConnectionStatusCode(connection) !=
+      WORKER_CONNECTION_STATUS_CODE_SUCCESS) {
+    printf("failed to connect to receptionist. reason: %s\n",
+           Worker_Connection_GetConnectionStatusDetailString(connection));
+    Worker_Connection_Destroy(connection);
+    return EXIT_FAILURE;
+  }
 
   /* Send a test message. */
   Worker_LogMessage message = {WORKER_LOG_LEVEL_WARN, "Client", "Connected successfully", NULL};
@@ -210,4 +220,5 @@ int main(int argc, char** argv) {
   }
 
   Worker_Connection_Destroy(connection);
+  return EXIT_SUCCESS;
 }
