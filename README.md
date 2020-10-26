@@ -13,7 +13,7 @@ Build the project and start it with the default launch configuration:
 
 ```
 spatial worker build --target windows
-spatial local launch
+spatial local launch --runtime_version=14.5.4
 ```
 
 (Replacing `windows` with `macos` on macOS, or `linux` on Linux).
