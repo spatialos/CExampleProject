@@ -2,18 +2,6 @@
   "build": {
     "tasks_filename": "build.json"
   },
-  "bridge": {
-    "worker_attribute_set": {
-      "attributes": [
-        "physics"
-      ]
-    },
-    "component_delivery": {
-      "default": "RELIABLE_ORDERED",
-      "checkout_all_initially": false,
-      "override": {}
-    }
-  },
   "managed": {
     "linux": {
       "artifact_name": "Physics@Linux.zip",

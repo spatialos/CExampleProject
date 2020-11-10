@@ -15,3 +15,7 @@ whether or not you have already made similar changes when APIs got deprecated.
 Now we will upgrade to SpatialOS 15.0.0.
 
 1. Update the version numbers used in `spatialos.json`.
+1. Remove unsupported bridge settings from all `worker.json`s. The settings
+   were used for legacy load balancing and interest systems. Both of these
+   systems have been re-worked and replaced, and these options are no longer
+   relevant.

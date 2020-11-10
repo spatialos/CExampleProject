@@ -2,18 +2,6 @@
   "build": {
     "tasks_filename": "build.json"
   },
-  "bridge": {
-    "worker_attribute_set": {
-      "attributes": [
-        "client_vtable"
-      ]
-    },
-    "component_delivery": {
-      "default": "RELIABLE_ORDERED",
-      "checkout_all_initially": false,
-      "override": {}
-    }
-  },
   "external": {
     "local": {
       "run_type": "EXECUTABLE_ZIP",
