@@ -39,7 +39,8 @@ int main(int argc, char** argv) {
 
   worker::ConnectionParameters parameters;
   parameters.WorkerType = "physics";
-  parameters.Network.ConnectionType = worker::NetworkConnectionType::kModularKcp;
+  parameters.Network.ConnectionType = worker::NetworkConnectionType::kKcp;
+  parameters.Network.Kcp.SecurityType = worker::NetworkSecurityType::kInsecure;
   parameters.Network.UseExternalIp = false;
 
   worker::LogsinkParameters logsink_params;

@@ -142,8 +142,8 @@ int main(int argc, char** argv) {
 
   /* Connect to SpatialOS. */
   Worker_ConnectionParameters params = Worker_DefaultConnectionParameters();
-  params.network.connection_type = WORKER_NETWORK_CONNECTION_TYPE_MODULAR_KCP;
-  params.network.modular_kcp.security_type = WORKER_NETWORK_SECURITY_TYPE_INSECURE;
+  params.network.connection_type = WORKER_NETWORK_CONNECTION_TYPE_KCP;
+  params.network.kcp.security_type = WORKER_NETWORK_SECURITY_TYPE_INSECURE;
   params.worker_type = "client_direct";
   params.network.tcp.multiplex_level = 4;
   params.default_component_vtable = &default_vtable;
