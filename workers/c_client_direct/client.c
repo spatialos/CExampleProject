@@ -169,10 +169,11 @@ int main(int argc, char** argv) {
   Worker_EntityQuery query;
   query.constraint.constraint_type = WORKER_CONSTRAINT_TYPE_ENTITY_ID;
   query.constraint.constraint.entity_id_constraint.entity_id = 1;
-  query.result_type = WORKER_RESULT_TYPE_SNAPSHOT;
   query.snapshot_result_type_component_id_count = 1;
   Worker_ComponentId position_component_id = POSITION_COMPONENT_ID;
   query.snapshot_result_type_component_ids = &position_component_id;
+  query.snapshot_result_type_component_set_id_count = 0;
+  query.snapshot_result_type_component_set_ids = NULL;
   Worker_Connection_SendEntityQueryRequest(connection, &query, NULL);
 
   /* Take control of the entity. */
