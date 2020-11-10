@@ -15,7 +15,7 @@ char* GenerateWorkerId(char* worker_id_prefix) {
 
   /* Format string. */
   char* worker_id = malloc(sizeof(char) * (size + 1));
-  sprintf(worker_id,fmt, worker_id_prefix, id);
+  sprintf(worker_id, fmt, worker_id_prefix, id);
   return worker_id;
 }
 

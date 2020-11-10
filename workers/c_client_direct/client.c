@@ -56,11 +56,11 @@ void OnEntityQueryResponse(const Worker_EntityQueryResponseOp* op) {
 }
 
 void OnAddEntity(const Worker_AddEntityOp* op) {
-    printf("received add entity op (entity: %" PRId64 ")\n", op->entity_id);
+  printf("received add entity op (entity: %" PRId64 ")\n", op->entity_id);
 }
 
 void OnRemoveEntity(const Worker_RemoveEntityOp* op) {
-    printf("received remove entity op (entity: %" PRId64 ")\n", op->entity_id);
+  printf("received remove entity op (entity: %" PRId64 ")\n", op->entity_id);
 }
 
 void OnAddComponent(const Worker_AddComponentOp* op) {
@@ -125,7 +125,9 @@ int main(int argc, char** argv) {
     printf("Connects to SpatialOS\n");
     printf("    <hostname>      - hostname of the receptionist to connect to.\n");
     printf("    <port>          - port to use\n");
-    printf("    <worker_id>     - name of the worker assigned by SpatialOS. A random prefix will be added to it to ensure uniqueness.\n");
+    printf(
+        "    <worker_id>     - name of the worker assigned by SpatialOS. A random prefix will be "
+        "added to it to ensure uniqueness.\n");
     return EXIT_FAILURE;
   }
 
