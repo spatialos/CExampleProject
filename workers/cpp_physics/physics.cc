@@ -41,6 +41,17 @@ int main(int argc, char** argv) {
   parameters.WorkerType = "physics";
   parameters.Network.ConnectionType = worker::NetworkConnectionType::kModularKcp;
   parameters.Network.UseExternalIp = false;
+
+  worker::LogsinkParameters logsink_params;
+  logsink_params.Type = worker::LogsinkType::kStdout;
+  auto log_filter = [](worker::LogCategory categories, worker::LogLevel level) -> bool {
+    return level >= worker::LogLevel::kWarn ||
+        (level >= worker::LogLevel::kInfo && categories & worker::LogCategory::kLogin);
+  };
+  logsink_params.FilterParameters.CustomFilter = log_filter;
+  parameters.Logsinks.emplace_back(logsink_params);
+  parameters.EnableLoggingAtStartup = true;
+
   worker::Connection connection =
       worker::Connection::ConnectAsync(ComponentRegistry{}, std::string{argv[1]}, atoi(argv[2]),
                                        argv[3], parameters)
@@ -59,14 +70,6 @@ int main(int argc, char** argv) {
   view.OnDisconnect([&](const worker::DisconnectOp& op) {
     std::cerr << "[disconnect] " << op.Reason << std::endl;
     is_connected = false;
-  });
-  view.OnLogMessage([&](const worker::LogMessageOp& op) {
-    if (op.Level == worker::LogLevel::kFatal) {
-      std::cerr << "Fatal error: " << op.Message << std::endl;
-      is_connected = false;
-    } else {
-      std::cout << "[remote] " << op.Message << std::endl;
-    }
   });
   view.OnCommandRequest<sample::Login::Commands::TakeControl>(
       [&](const worker::CommandRequestOp<sample::Login::Commands::TakeControl>& op) {
