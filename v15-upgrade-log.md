@@ -11,3 +11,7 @@ whether or not you have already made similar changes when APIs got deprecated.
 1. Use the new logging API instead of `LogMessageOp`s. For simplicity, we log
    all messages with log-level Warning and above, and Info messages related to
    establishing the connection.
+
+Now we will upgrade to SpatialOS 15.0.0.
+
+1. Update the version numbers used in `spatialos.json`.
