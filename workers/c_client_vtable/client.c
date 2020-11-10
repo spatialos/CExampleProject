@@ -19,9 +19,12 @@ char* GenerateWorkerId(char* worker_id_prefix) {
   return worker_id;
 }
 
-/** Op handler functions. */
-void OnLogMessage(const Worker_LogMessageOp* op) {
-  printf("log: %s\n", op->message);
+uint8_t LogFilter(void* user_data_unused, uint32_t categories, Worker_LogLevel level) {
+  (void)user_data_unused;
+  return level >= WORKER_LOG_LEVEL_WARN ||
+          (level >= WORKER_LOG_LEVEL_INFO && categories & WORKER_LOG_CATEGORY_LOGIN)
+      ? 1u
+      : 0u;
 }
 
 void OnDisconnect(const Worker_DisconnectOp* op) {
@@ -164,6 +167,14 @@ int main(int argc, char** argv) {
   params.network.tcp.multiplex_level = 4;
   params.component_vtable_count = sizeof(component_vtables) / sizeof(component_vtables[0]);
   params.component_vtables = component_vtables;
+
+  Worker_LogsinkParameters logsink_params = {0};
+  logsink_params.logsink_type = WORKER_LOGSINK_TYPE_STDOUT;
+  logsink_params.filter_parameters.callback = &LogFilter;
+  params.logsink_count = 1u;
+  params.logsinks = &logsink_params;
+  params.enable_logging_at_startup = 1u;
+
   Worker_ConnectionFuture* connection_future =
       Worker_ConnectAsync(argv[1], (uint16_t)atoi(argv[2]), worker_id, &params);
   Worker_Connection* connection = Worker_ConnectionFuture_Get(connection_future, NULL);
@@ -204,9 +215,6 @@ int main(int argc, char** argv) {
       switch (op->op_type) {
       case WORKER_OP_TYPE_DISCONNECT:
         OnDisconnect(&op->op.disconnect);
-        break;
-      case WORKER_OP_TYPE_LOG_MESSAGE:
-        OnLogMessage(&op->op.log_message);
         break;
       case WORKER_OP_TYPE_ENTITY_QUERY_RESPONSE:
         OnEntityQueryResponse(&op->op.entity_query_response);
