@@ -19,3 +19,9 @@ Now we will upgrade to SpatialOS 15.0.0.
    were used for legacy load balancing and interest systems. Both of these
    systems have been re-worked and replaced, and these options are no longer
    relevant.
+1. Update which worker packages are used by the project. Debug packages are no
+   longer available by default, and Linux packages have been renamed to reflect
+   compiler upgrades. Refer to the full release notes to see how this changed
+   the runtime requirements. For example, the required minimum version of
+   `glibc` has increased on Linux, which might cause incompatibility with old
+   Linux distributions.
