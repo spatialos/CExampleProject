@@ -31,3 +31,5 @@ Now we will upgrade to SpatialOS 15.0.0.
    for all workers. If we were to use TLS or DTLS connection security, we would
    have to turn this off when running locally, as the runtime Local Edition does
    not support establishing secure connections.
+1. Address changes to entity queries. The only result type is now the snapshot
+   result type.
