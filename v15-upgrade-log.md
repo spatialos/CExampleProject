@@ -85,6 +85,19 @@ Now we will upgrade to SpatialOS 15.0.0.
    permission. We are also starting the physics worker as a managed worker, and
    so would need to address the breaking change where `layer` no longer refers
    to an attribute, but refers to a worker type instead. However, because the
-   attribute matched the worker type to bein with, we don't have to make any
+   attribute matched the worker type to begin with, we don't have to make any
    changes. We also take the opportunity to remove some flags which are no longer
    necessary.
+
+We can now run the project. Please note that this project does not use all
+SpatialOS features, and might not use them in the same way as your project.
+This is therefore an illustration of what an upgrade might look like, but you
+will need to assess what that looks like on a case by case basis, and examine
+the full release notes. In particular, among the larger impact changes, this
+project does not use:
+* The `AuthorityChangeOp`, which has been replaced with the
+  `ComponentSetAuthorityChangeOp`.
+* We did not use the schema AST format in this project, which has been removed.
+* We use the Structured Project Layout, rather than the Flexible Project Layout.
+  If you are using FPL, it might change some steps required.
+* We did not use the legacy interest APIs.
