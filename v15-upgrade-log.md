@@ -25,3 +25,5 @@ Now we will upgrade to SpatialOS 15.0.0.
    the runtime requirements. For example, the required minimum version of
    `glibc` has increased on Linux, which might cause incompatibility with old
    Linux distributions.
+1. Update the build scripts to address the lack of availability of Windows debug
+   packages, and the removal of the raknet static library.

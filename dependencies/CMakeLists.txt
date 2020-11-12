@@ -7,49 +7,26 @@ set(WORKER_SDK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/worker_sdk")
 
 # Worker SDK libraries shared by both the C and C++ APIs.
 find_package(Threads)
-# Debug libraries.
-find_library(LIB_IMPROBABLE_WORKER_DEBUG
+find_library(LIB_IMPROBABLE_WORKER
   NAMES improbable_worker
-  PATHS "${WORKER_SDK_DIR}/lib/debug" "${WORKER_SDK_DIR}/lib"
+  PATHS "${WORKER_SDK_DIR}/lib"
   NO_DEFAULT_PATH)
-find_library(LIB_RAKNET_DEBUG
-  NAMES RakNetLibStatic
-  PATHS "${WORKER_SDK_DIR}/lib/debug" "${WORKER_SDK_DIR}/lib"
-  NO_DEFAULT_PATH)
-find_library(LIB_SSL_DEBUG
+find_library(LIB_SSL
   NAMES ssl
-  PATHS "${WORKER_SDK_DIR}/lib/debug" "${WORKER_SDK_DIR}/lib"
+  PATHS "${WORKER_SDK_DIR}/lib"
   NO_DEFAULT_PATH)
-find_library(LIB_ZLIB_DEBUG
+find_library(LIB_ZLIB
   NAMES z zlibstatic
-  PATHS "${WORKER_SDK_DIR}/lib/debug" "${WORKER_SDK_DIR}/lib"
-  NO_DEFAULT_PATH)
-# Release libraries.
-find_library(LIB_IMPROBABLE_WORKER_RELEASE
-  NAMES improbable_worker
-  PATHS "${WORKER_SDK_DIR}/lib/release" "${WORKER_SDK_DIR}/lib"
-  NO_DEFAULT_PATH)
-find_library(LIB_RAKNET_RELEASE
-  NAMES RakNetLibStatic
-  PATHS "${WORKER_SDK_DIR}/lib/release" "${WORKER_SDK_DIR}/lib"
-  NO_DEFAULT_PATH)
-find_library(LIB_SSL_RELEASE
-  NAMES ssl
-  PATHS "${WORKER_SDK_DIR}/lib/release" "${WORKER_SDK_DIR}/lib"
-  NO_DEFAULT_PATH)
-find_library(LIB_ZLIB_RELEASE
-  NAMES z zlibstatic
-  PATHS "${WORKER_SDK_DIR}/lib/release" "${WORKER_SDK_DIR}/lib"
+  PATHS "${WORKER_SDK_DIR}/lib"
   NO_DEFAULT_PATH)
 
 # C API.
 add_library(CWorker INTERFACE)
 target_include_directories(CWorker SYSTEM INTERFACE "${WORKER_SDK_DIR}/c_headers/include")
 target_link_libraries(CWorker INTERFACE
-  debug ${LIB_IMPROBABLE_WORKER_DEBUG} optimized ${LIB_IMPROBABLE_WORKER_RELEASE}
-  debug ${LIB_RAKNET_DEBUG} optimized ${LIB_RAKNET_RELEASE}
-  debug ${LIB_ZLIB_DEBUG} optimized ${LIB_ZLIB_RELEASE}
-  debug ${LIB_SSL_DEBUG} optimized ${LIB_SSL_RELEASE}
+  ${LIB_IMPROBABLE_WORKER}
+  ${LIB_ZLIB}
+  ${LIB_SSL}
   ${CMAKE_THREAD_LIBS_INIT}
   ${CMAKE_DL_LIBS})
 
@@ -57,10 +34,9 @@ target_link_libraries(CWorker INTERFACE
 add_library(CppWorker INTERFACE)
 target_include_directories(CppWorker SYSTEM INTERFACE "${WORKER_SDK_DIR}/cpp_headers/include")
 target_link_libraries(CppWorker INTERFACE
-  debug ${LIB_IMPROBABLE_WORKER_DEBUG} optimized ${LIB_IMPROBABLE_WORKER_RELEASE}
-  debug ${LIB_RAKNET_DEBUG} optimized ${LIB_RAKNET_RELEASE}
-  debug ${LIB_ZLIB_DEBUG} optimized ${LIB_ZLIB_RELEASE}
-  debug ${LIB_SSL_DEBUG} optimized ${LIB_SSL_RELEASE}
+  ${LIB_IMPROBABLE_WORKER}
+  ${LIB_ZLIB}
+  ${LIB_SSL}
   ${CMAKE_THREAD_LIBS_INIT}
   ${CMAKE_DL_LIBS})
 
