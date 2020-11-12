@@ -68,3 +68,13 @@ Now we will upgrade to SpatialOS 15.0.0.
    multiple partitions at once. The delegation of component sets to partitions
    can be dynamic. Which component sets are delegated can be dynamic too, as long
    as they don't overlap at any time, on any given entity.
+1. Fix the initial snapshot. We need to remove the EntityAcl and replace it with
+   AuthorityDelegation. We will also need the entities which serve as our
+   Partitions. Additionally, interest is now defined in terms of component sets
+   rather than components to match the authority model, and so we will need to
+   address that as well. We modify the json snapshot directly to account for the
+   changes mentioned above, and update the binary snapshot by converting the
+   json one using the following command:
+   `spatial project history snapshot convert --input snapshots/default.json --input-format=text --output snapshots/default.snapshot --output-format=binary`.
+   Note that we had to manually add some new fields to the json snapshot, as the
+   json format requires all fields to be specified (even if they are empty).

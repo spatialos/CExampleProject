@@ -1,68 +1,21 @@
 {
   "__entity_id": "1",
-  "improbable.EntityAcl": {
-    "component_write_acl": [
+  "improbable.AuthorityDelegation": {
+    "delegations": [
       {
-        "key": 54,
-        "value": {
-          "attribute_set": [
-            {
-              "attribute": [
-                "physics"
-              ]
-            }
-          ]
-        }
+        "key": 2000,
+        "value": 2
       },
       {
-        "key": 50,
-        "value": {
-          "attribute_set": [
-            {
-              "attribute": [
-                "physics"
-              ]
-            }
-          ]
-        }
-      },
-      {
-        "key": 1000,
-        "value": {
-          "attribute_set": [
-            {
-              "attribute": [
-                "physics"
-              ]
-            }
-          ]
-        }
+        "key": 2001,
+        "value": 3
       }
-    ],
-    "read_acl": {
-      "attribute_set": [
-        {
-          "attribute": [
-            "physics"
-          ]
-        },
-        {
-          "attribute": [
-            "client_direct"
-          ]
-        },
-        {
-          "attribute": [
-            "client_vtable"
-          ]
-        }
-      ]
-    }
+    ]
   },
   "improbable.Interest": {
-    "component_interest": [
+    "component_set_interest": [
       {
-        "key": 1001,
+        "key": 2001,
         "value": {
           "queries": [
             {
@@ -80,13 +33,15 @@
                     "radius": 50.0
                   }
                 ],
+                "self_constraint": [],
                 "sphere_constraint": []
               },
               "frequency": [],
               "full_snapshot_result": [
                 true
               ],
-              "result_component_id": []
+              "result_component_id": [],
+              "result_component_set_id": []
             }
           ]
         }
@@ -111,28 +66,34 @@
 }
 {
   "__entity_id": "2",
-  "improbable.EntityAcl": {
-    "component_write_acl": [],
-    "read_acl": {
-      "attribute_set": [
-        {
-          "attribute": [
-            "physics"
-          ]
-        },
-        {
-          "attribute": [
-            "client_direct"
-          ]
-        },
-        {
-          "attribute": [
-            "client_vtable"
-          ]
-        }
-      ]
-    }
+  "improbable.Metadata": {
+    "entity_type":"PartitionEntity"
   },
+  "improbable.Persistence": {},
+  "improbable.Position": {
+    "coords": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  }
+}
+{
+  "__entity_id": "3",
+  "improbable.Metadata": {
+    "entity_type":"PartitionEntity"
+  },
+  "improbable.Persistence": {},
+  "improbable.Position": {
+    "coords": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  }
+}
+{
+  "__entity_id": "4",
   "improbable.Persistence": {},
   "improbable.Position": {
     "coords": {
