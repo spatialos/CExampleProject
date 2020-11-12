@@ -37,3 +37,9 @@ Now we will upgrade to SpatialOS 15.0.0.
    fixing the snapshot and getting authority to work later.
 1. Address changes made to command request op metadata. We only have to change
    some logging messages for now.
+1. Add component sets. The physics worker always had authority over the EntityAcl,
+   the Position, and the Login component, while the client had authority over the
+   ClientData component. We will therefore need two component sets to represent
+   the two different units of authority in our project. We could replace the
+   EntityAcl with the AuthorityDelegation component, but with the new user-space
+   load balancing, we won't need to update authority dynamically.
