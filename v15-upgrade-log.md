@@ -78,3 +78,5 @@ Now we will upgrade to SpatialOS 15.0.0.
    `spatial project history snapshot convert --input snapshots/default.json --input-format=text --output snapshots/default.snapshot --output-format=binary`.
    Note that we had to manually add some new fields to the json snapshot, as the
    json format requires all fields to be specified (even if they are empty).
+1. As a drive-by fix, we make sure we only attempt to send updates when we have
+   authority.

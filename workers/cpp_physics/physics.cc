@@ -123,10 +123,13 @@ int main(int argc, char** argv) {
     view.Process(connection.GetOpList(kOpListTimeoutMs));
 
     // Update position of entity.
-    angle += 0.5;
-    improbable::Position::Update position_update;
-    position_update.set_coords({std::sin(angle) * 100.0, 0.0, std::cos(angle) * 100.0});
-    connection.SendComponentUpdate<improbable::Position>(entityId, position_update);
+    if (view.GetAuthority<sample::PhysicsSimulationSet>(entityId) ==
+        worker::Authority::kAuthoritative) {
+      angle += 0.5;
+      improbable::Position::Update position_update;
+      position_update.set_coords({std::sin(angle) * 100.0, 0.0, std::cos(angle) * 100.0});
+      connection.SendComponentUpdate<improbable::Position>(entityId, position_update);
+    }
 
     // Sleep for some time.
     std::this_thread::sleep_for(std::chrono::seconds(1));
