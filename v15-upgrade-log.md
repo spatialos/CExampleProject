@@ -80,3 +80,11 @@ Now we will upgrade to SpatialOS 15.0.0.
    json format requires all fields to be specified (even if they are empty).
 1. As a drive-by fix, we make sure we only attempt to send updates when we have
    authority.
+1. Fix up the launch configurations. We only have one, `default_launch.json`. As
+   we now need the physics worker to send system entity commands, we add this
+   permission. We are also starting the physics worker as a managed worker, and
+   so would need to address the breaking change where `layer` no longer refers
+   to an attribute, but refers to a worker type instead. However, because the
+   attribute matched the worker type to bein with, we don't have to make any
+   changes. We also take the opportunity to remove some flags which are no longer
+   necessary.

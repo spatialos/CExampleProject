@@ -1,20 +1,13 @@
 {
   "template": "w2_r0500_e5",
   "world": {
-    "chunk_edge_length_meters": 50,
     "snapshots": {
       "snapshot_write_period_seconds": 0
     },
     "dimensions": {
       "x_meters": 1500,
       "z_meters": 1500
-    },
-    "legacy_flags": [
-      {
-        "name": "interest_queries_components_are_filtered_by_component_delivery",
-        "value": "false"
-      }
-    ]
+    }
   },
   "load_balancing": {
     "layer_configurations": [
@@ -40,6 +33,9 @@
         "entity_query": {
           "allow": true,
           "components": ["*"]
+        },
+        "system_entity_command": {
+          "allow": true
         }
       }]
     },
