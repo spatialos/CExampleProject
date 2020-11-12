@@ -74,7 +74,8 @@ int main(int argc, char** argv) {
   view.OnCommandRequest<sample::Login::Commands::TakeControl>(
       [&](const worker::CommandRequestOp<sample::Login::Commands::TakeControl>& op) {
         connection.SendLogMessage(worker::LogLevel::kInfo, "Physics",
-                                  "Assigning ClientData component to " + op.CallerAttributeSet[1]);
+                                  "Assigning ClientData component to worker with ID " +
+                                      std::to_string(op.CallerWorkerEntityId));
       });
   view.OnCommandResponse<sample::ClientData::Commands::TestCommand>(
       [&](const worker::CommandResponseOp<sample::ClientData::Commands::TestCommand>& op) {
