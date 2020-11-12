@@ -46,3 +46,25 @@ Now we will upgrade to SpatialOS 15.0.0.
 1. Update the component registry for the C++ physics worker. We use the
    `worker::Schema` template to combine components and component sets. We need
    both, as component sets are now the unit of authority.
+1. Create and implement an authority model. Our requirements in this example are
+   very simple. We want two different workers to be authoritative over two
+   disctinct component sets on one entity. We will therefore need two partitions.
+   To keep things clean, we will use two separate entities to represent the
+   partitions. We will fix the snapshot later. For now, let's assume that these
+   partitions have IDs 2 for the physics simulation, and 3 for the client
+   simulation. We only have one entity we want to simulate, and the authority
+   delegation can be fully static. All we need to do is:
+   * When the physics worker starts, it needs to assign partition with ID 2 to
+     itself.
+   * When a client worker requests authority, the physics worker needs to assign
+     it the partition with ID 3.
+   * We need to ensure the physics worker has the right permissions to send
+     system commands. We will address this later, when fixing the launch
+     configurations.
+
+   Please note that this is the very simplest example of how to distribute work
+   and authority. The number of partitions in the world can be dynamic. The
+   mapping of workers to partitions can be dynamic, and a worker can simulate
+   multiple partitions at once. The delegation of component sets to partitions
+   can be dynamic. Which component sets are delegated can be dynamic too, as long
+   as they don't overlap at any time, on any given entity.
