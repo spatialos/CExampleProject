@@ -8,11 +8,18 @@
 #include <improbable/view.h>
 #include <improbable/worker.h>
 
+#include <improbable/restricted/system_components.h>
 #include <improbable/standard_library.h>
 #include <client_data.h>
 
-using ComponentRegistry = worker::Components<improbable::Position, improbable::Metadata,
-                                             sample::Login, sample::ClientData>;
+// We are using the PhysicsSimulationSet and ClientSimulationSet component sets for delegating
+// authority. This includes all user-defined components at the moment. We also need some
+// standard-library components which we don't currently delegate to anyone, so we include the
+// WellKnownComponentSet and some components from the improbable::restricted namespace.
+using ComponentRegistry =
+    worker::Schema<sample::PhysicsSimulationSet, sample::ClientSimulationSet,
+                   improbable::WellKnownComponentSet, improbable::restricted::Worker,
+                   improbable::restricted::Partition>;
 
 const int kErrorExitStatus = 1;
 const std::uint32_t kOpListTimeoutMs = 100;
