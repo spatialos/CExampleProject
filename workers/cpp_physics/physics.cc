@@ -11,9 +11,8 @@
 #include <improbable/standard_library.h>
 #include <client_data.h>
 
-using ComponentRegistry =
-    worker::Components<improbable::Position, improbable::Metadata, improbable::EntityAcl,
-                       sample::Login, sample::ClientData>;
+using ComponentRegistry = worker::Components<improbable::Position, improbable::Metadata,
+                                             sample::Login, sample::ClientData>;
 
 const int kErrorExitStatus = 1;
 const std::uint32_t kOpListTimeoutMs = 100;
@@ -76,15 +75,6 @@ int main(int argc, char** argv) {
       [&](const worker::CommandRequestOp<sample::Login::Commands::TakeControl>& op) {
         connection.SendLogMessage(worker::LogLevel::kInfo, "Physics",
                                   "Assigning ClientData component to " + op.CallerAttributeSet[1]);
-
-        // Assign write ACL of the client data component to the worker ID received.
-        improbable::EntityAcl::Update acl_update;
-        auto current_write_acl =
-            view.Entities[entityId].Get<improbable::EntityAcl>()->component_write_acl();
-        current_write_acl[sample::ClientData::ComponentId] =
-            improbable::WorkerRequirementSet({{{op.CallerAttributeSet[1]}}});
-        acl_update.set_component_write_acl(current_write_acl);
-        connection.SendComponentUpdate<improbable::EntityAcl>(entityId, acl_update);
       });
   view.OnCommandResponse<sample::ClientData::Commands::TestCommand>(
       [&](const worker::CommandResponseOp<sample::ClientData::Commands::TestCommand>& op) {

@@ -33,3 +33,5 @@ Now we will upgrade to SpatialOS 15.0.0.
    not support establishing secure connections.
 1. Address changes to entity queries. The only result type is now the snapshot
    result type.
+1. Remove the use of EntityAcl from code, as it's been removed. We will deal with
+   fixing the snapshot and getting authority to work later.
