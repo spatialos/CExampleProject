@@ -1,5 +1,7 @@
 package sample;
 
+import "improbable/standard_library.schema";
+
 type AddCommandRequest {
   int32 payload1 = 1;
   float payload2 = 2;
@@ -20,4 +22,14 @@ component ClientData {
   id = 1001;
   float input_state = 1;
   command AddCommandResponse test_command(AddCommandRequest);
+}
+
+component_set PhysicsSimulationSet {
+  id = 2000;
+  components = [improbable.Position, Login];
+}
+
+component_set ClientSimulationSet {
+  id = 2001;
+  components = [ClientData];
 }
