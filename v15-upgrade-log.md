@@ -43,3 +43,6 @@ Now we will upgrade to SpatialOS 15.0.0.
    the two different units of authority in our project. We could replace the
    EntityAcl with the AuthorityDelegation component, but with the new user-space
    load balancing, we won't need to update authority dynamically.
+1. Update the component registry for the C++ physics worker. We use the
+   `worker::Schema` template to combine components and component sets. We need
+   both, as component sets are now the unit of authority.
