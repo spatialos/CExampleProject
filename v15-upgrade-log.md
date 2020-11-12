@@ -35,3 +35,5 @@ Now we will upgrade to SpatialOS 15.0.0.
    result type.
 1. Remove the use of EntityAcl from code, as it's been removed. We will deal with
    fixing the snapshot and getting authority to work later.
+1. Address changes made to command request op metadata. We only have to change
+   some logging messages for now.
