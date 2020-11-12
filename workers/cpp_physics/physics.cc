@@ -42,6 +42,8 @@ int main(int argc, char** argv) {
   }
 
   worker::EntityId entityId = 1;
+  worker::EntityId physicsPartitionId = 2;
+  worker::EntityId clientPartitionId = 3;
 
   worker::ConnectionParameters parameters;
   parameters.WorkerType = "physics";
@@ -74,6 +76,25 @@ int main(int argc, char** argv) {
   worker::View view{ComponentRegistry{}};
   bool is_connected = true;
 
+  using AssignPartitionCommand = improbable::restricted::Worker::Commands::AssignPartition;
+  // In real code, we would probably want to retry here.
+  view.OnCommandResponse<AssignPartitionCommand>(
+      [&](const worker::CommandResponseOp<AssignPartitionCommand>& op) {
+        if (op.StatusCode == worker::StatusCode::kSuccess) {
+          connection.SendLogMessage(worker::LogLevel::kInfo, "Physics",
+                                    "Successfully assigned partition.");
+        } else {
+          connection.SendLogMessage(worker::LogLevel::kError, "Physics",
+                                    "Failed to assign partition: error code : " +
+                                        std::to_string(static_cast<std::uint8_t>(op.StatusCode)) +
+                                        " message: " + op.Message);
+        }
+      });
+
+  connection.SendCommandRequest<improbable::restricted::Worker::Commands::AssignPartition>(
+      connection.GetWorkerEntityId(), {physicsPartitionId},
+      /* default timeout */ {});
+
   view.OnDisconnect([&](const worker::DisconnectOp& op) {
     std::cerr << "[disconnect] " << op.Reason << std::endl;
     is_connected = false;
@@ -81,8 +102,11 @@ int main(int argc, char** argv) {
   view.OnCommandRequest<sample::Login::Commands::TakeControl>(
       [&](const worker::CommandRequestOp<sample::Login::Commands::TakeControl>& op) {
         connection.SendLogMessage(worker::LogLevel::kInfo, "Physics",
-                                  "Assigning ClientData component to worker with ID " +
+                                  "Assigning the client partition to worker with ID " +
                                       std::to_string(op.CallerWorkerEntityId));
+        connection.SendCommandRequest<AssignPartitionCommand>(op.CallerWorkerEntityId,
+                                                              {clientPartitionId},
+                                                              /* default timeout */ {});
       });
   view.OnCommandResponse<sample::ClientData::Commands::TestCommand>(
       [&](const worker::CommandResponseOp<sample::ClientData::Commands::TestCommand>& op) {
