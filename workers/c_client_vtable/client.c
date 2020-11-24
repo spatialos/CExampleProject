@@ -164,7 +164,8 @@ int main(int argc, char** argv) {
   /* Connect to SpatialOS. */
   Worker_ConnectionParameters params = Worker_DefaultConnectionParameters();
   params.worker_type = "client_vtable";
-  params.network.tcp.multiplex_level = 4;
+  params.network.connection_type = WORKER_NETWORK_CONNECTION_TYPE_KCP;
+  params.network.kcp.security_type = WORKER_NETWORK_SECURITY_TYPE_INSECURE;
   params.component_vtable_count = sizeof(component_vtables) / sizeof(component_vtables[0]);
   params.component_vtables = component_vtables;
 

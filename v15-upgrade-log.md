@@ -27,3 +27,7 @@ Now we will upgrade to SpatialOS 15.0.0.
    release notes to see how this changed the runtime requirements. For example,
    the required minimum version of `glibc` has increased on Linux, which might
    cause incompatibility with old Linux distributions.
+1. Update the connection types. For simplicity, we are using Insecure connections
+   for all workers. If we were to use TLS or DTLS connection security, we would
+   have to turn this off when running locally, as the runtime Local Edition does
+   not support establishing secure connections.
