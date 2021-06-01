@@ -16,3 +16,8 @@ dependencies/worker_sdk
 
 .idea
 cmake-build-debug
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite
+.vs/ProjectSettings.json
+.vs/CExampleProject/v16/Browse.VC.db
+.vs/CExampleProject/v16/.suo
