@@ -11,7 +11,8 @@
         "arguments": [
           "localhost",
           "7777",
-          "ClientLocalLinux"
+          "ClientLocalLinux",
+          "1"
         ]
       },
       "windows": {
@@ -20,7 +21,8 @@
         "arguments": [
           "localhost",
           "7777",
-          "ClientLocalWindows"
+          "ClientLocalWindows",
+          "1"
         ]
       },
       "macos": {
@@ -29,9 +31,79 @@
         "arguments": [
           "localhost",
           "7777",
-          "ClientLocalMac"
+          "ClientLocalMac",
+          "1"
+        ]
+      }
+    },
+
+    "local101": {
+      "run_type": "EXECUTABLE_ZIP",
+      "linux": {
+        "artifact_name": "ClientDirect@Linux.zip",
+        "command": "./ClientDirect",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalLinux",
+          "101"
+        ]
+      },
+      "windows": {
+        "artifact_name": "ClientDirect@Windows.zip",
+        "command": "./ClientDirect.exe",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalWindows",
+          "101"
+        ]
+      },
+      "macos": {
+        "artifact_name": "ClientDirect@Mac.zip",
+        "command": "./ClientDirect",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalMac",
+          "101"
+        ]
+      }
+    },
+
+    "local102": {
+      "run_type": "EXECUTABLE_ZIP",
+      "linux": {
+        "artifact_name": "ClientDirect@Linux.zip",
+        "command": "./ClientDirect",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalLinux",
+          "102"
+        ]
+      },
+      "windows": {
+        "artifact_name": "ClientDirect@Windows.zip",
+        "command": "./ClientDirect.exe",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalWindows",
+          "102"
+        ]
+      },
+      "macos": {
+        "artifact_name": "ClientDirect@Mac.zip",
+        "command": "./ClientDirect",
+        "arguments": [
+          "localhost",
+          "7777",
+          "ClientLocalMac",
+          "102"
         ]
       }
     }
+
   }
 }

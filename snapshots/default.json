@@ -65,6 +65,138 @@
   "sample.Login": {}
 }
 {
+  "__entity_id": "101",
+  "improbable.AuthorityDelegation": {
+    "delegations": [
+      {
+        "key": 2000,
+        "value": 2
+      },
+      {
+        "key": 2001,
+        "value": 3
+      }
+    ]
+  },
+  "improbable.Interest": {
+    "component_set_interest": [
+      {
+        "key": 2001,
+        "value": {
+          "queries": [
+            {
+              "constraint": {
+                "and_constraint": [],
+                "box_constraint": [],
+                "component_constraint": [],
+                "cylinder_constraint": [],
+                "entity_id_constraint": [],
+                "or_constraint": [],
+                "relative_box_constraint": [],
+                "relative_cylinder_constraint": [],
+                "relative_sphere_constraint": [
+                  {
+                    "radius": 50.0
+                  }
+                ],
+                "self_constraint": [],
+                "sphere_constraint": []
+              },
+              "frequency": [],
+              "full_snapshot_result": [
+                true
+              ],
+              "result_component_id": [],
+              "result_component_set_id": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "improbable.Metadata": {
+    "entity_type":"TestEntity"
+  },
+  "improbable.Persistence": {},
+  "improbable.Position": {
+    "coords": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  },
+  "sample.ClientData": {
+    "input_state": 0.5
+  },
+  "sample.Login": {}
+}
+{
+  "__entity_id": "102",
+  "improbable.AuthorityDelegation": {
+    "delegations": [
+      {
+        "key": 2000,
+        "value": 2
+      },
+      {
+        "key": 2001,
+        "value": 3
+      }
+    ]
+  },
+  "improbable.Interest": {
+    "component_set_interest": [
+      {
+        "key": 2001,
+        "value": {
+          "queries": [
+            {
+              "constraint": {
+                "and_constraint": [],
+                "box_constraint": [],
+                "component_constraint": [],
+                "cylinder_constraint": [],
+                "entity_id_constraint": [],
+                "or_constraint": [],
+                "relative_box_constraint": [],
+                "relative_cylinder_constraint": [],
+                "relative_sphere_constraint": [
+                  {
+                    "radius": 50.0
+                  }
+                ],
+                "self_constraint": [],
+                "sphere_constraint": []
+              },
+              "frequency": [],
+              "full_snapshot_result": [
+                true
+              ],
+              "result_component_id": [],
+              "result_component_set_id": []
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "improbable.Metadata": {
+    "entity_type":"TestEntity"
+  },
+  "improbable.Persistence": {},
+  "improbable.Position": {
+    "coords": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  },
+  "sample.ClientData": {
+    "input_state": 0.5
+  },
+  "sample.Login": {}
+}
+{
   "__entity_id": "2",
   "improbable.Metadata": {
     "entity_type":"PartitionEntity"

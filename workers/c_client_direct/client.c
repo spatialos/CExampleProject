@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <sys/time.h>
 
 #define POSITION_COMPONENT_ID 54
 #define LOGIN_COMPONENT_ID 1000
@@ -59,14 +60,15 @@ void OnEntityQueryResponse(const Worker_EntityQueryResponseOp* op) {
 }
 
 void OnAddEntity(const Worker_AddEntityOp* op) {
-  printf("received add entity op (entity: %" PRId64 ")\n", op->entity_id);
+  //printf("received add entity op (entity: %" PRId64 ")\n", op->entity_id);
 }
 
 void OnRemoveEntity(const Worker_RemoveEntityOp* op) {
-  printf("received remove entity op (entity: %" PRId64 ")\n", op->entity_id);
+  //printf("received remove entity op (entity: %" PRId64 ")\n", op->entity_id);
 }
 
 void OnAddComponent(const Worker_AddComponentOp* op) {
+  #if 0
   printf("received add component op (entity: %" PRId64 ", component: %d)\n", op->entity_id,
          op->data.component_id);
 
@@ -80,9 +82,11 @@ void OnAddComponent(const Worker_AddComponentOp* op) {
     z = Schema_GetDouble(coords_object, 3);
     printf("received improbable.Position initial data: (%f, %f, %f)\n", x, y, z);
   }
+  #endif
 }
 
 void OnComponentUpdate(const Worker_ComponentUpdateOp* op) {
+  #if 0
   printf("received component update op (entity: %" PRId64 ", component: %d)\n", op->entity_id,
          op->update.component_id);
 
@@ -95,12 +99,13 @@ void OnComponentUpdate(const Worker_ComponentUpdateOp* op) {
     double z = Schema_GetDouble(coords_object, 3);
     printf("received improbable.Position update: (%f, %f, %f)\n", x, y, z);
   }
+  #endif
 }
 
 void OnCommandRequest(Worker_Connection* connection, const Worker_CommandRequestOp* op) {
   Schema_FieldId command_index = op->request.command_index;
-  printf("received command request (entity: %" PRId64 ", component: %d, command: %d).\n",
-         op->entity_id, op->request.component_id, command_index);
+  /* printf("received command request (entity: %" PRId64 ", component: %d, command: %d).\n",
+         op->entity_id, op->request.component_id, command_index); */
 
   if (op->request.component_id == CLIENTDATA_COMPONENT_ID && command_index == 1) {
     Schema_Object* payload = Schema_GetCommandRequestObject(op->request.schema_type);
@@ -116,21 +121,22 @@ void OnCommandRequest(Worker_Connection* connection, const Worker_CommandRequest
     Schema_AddFloat(response_object, 1, sum);
     Worker_Connection_SendCommandResponse(connection, op->request_id, &response);
 
-    printf("sending command response. Sum: %f\n", sum);
+    //printf("sending command response. Sum: %f\n", sum);
   }
 }
 
 int main(int argc, char** argv) {
   srand(time(NULL));
 
-  if (argc != 4) {
+  if (argc != 5) {
     printf("Usage: %s <hostname> <port> <worker_id>\n", argv[0]);
     printf("Connects to SpatialOS\n");
     printf("    <hostname>      - hostname of the receptionist to connect to.\n");
     printf("    <port>          - port to use\n");
     printf(
         "    <worker_id>     - name of the worker assigned by SpatialOS. A random prefix will be "
-        "added to it to ensure uniqueness.\n");
+        "added to it to ensure uniqueness.\n"
+        "    <entityId>      - The entity ID you want to query\n");
     return EXIT_FAILURE;
   }
 
@@ -139,6 +145,8 @@ int main(int argc, char** argv) {
 
   /* Generate worker ID. */
   char* worker_id = GenerateWorkerId(argv[3]);
+
+  int entityId = atoi(argv[4]);
 
   /* Connect to SpatialOS. */
   Worker_ConnectionParameters params = Worker_DefaultConnectionParameters();
@@ -168,15 +176,16 @@ int main(int argc, char** argv) {
   /* Send an entity query. */
   Worker_EntityQuery query;
   query.constraint.constraint_type = WORKER_CONSTRAINT_TYPE_ENTITY_ID;
-  query.constraint.constraint.entity_id_constraint.entity_id = 1;
+  query.constraint.constraint.entity_id_constraint.entity_id = entityId;
   query.snapshot_result_type_component_id_count = 1;
   Worker_ComponentId position_component_id = POSITION_COMPONENT_ID;
   query.snapshot_result_type_component_ids = &position_component_id;
   query.snapshot_result_type_component_set_id_count = 0;
   query.snapshot_result_type_component_set_ids = NULL;
   Worker_Connection_SendEntityQueryRequest(connection, &query, NULL);
-
+  
   /* Take control of the entity. */
+
   Worker_CommandRequest command_request;
   memset(&command_request, 0, sizeof(command_request));
   command_request.component_id = LOGIN_COMPONENT_ID;
@@ -184,16 +193,24 @@ int main(int argc, char** argv) {
   command_request.schema_type = Schema_CreateCommandRequest();
   Worker_CommandParameters command_parameters;
   command_parameters.allow_short_circuit = 0;
-  Worker_Connection_SendCommandRequest(connection, 1, &command_request, NULL, &command_parameters);
-
+  Worker_Connection_SendCommandRequest(connection, entityId, &command_request, NULL, &command_parameters);
+ 
   /* Main loop. */
-  while (1) {
-    Worker_OpList* op_list = Worker_Connection_GetOpList(connection, 0);
+  unsigned long long msg_count = 0;
+  int go_on = 1;
+  struct timeval tv1, tv2;
+  gettimeofday(&tv1, NULL);
+
+  while (go_on && msg_count < 10000000) {
+    Worker_OpList* op_list = Worker_Connection_GetOpList(connection, 100);
     for (size_t i = 0; i < op_list->op_count; ++i) {
+      ++msg_count;
       Worker_Op* op = &op_list->ops[i];
       switch (op->op_type) {
       case WORKER_OP_TYPE_DISCONNECT:
+        --msg_count;
         OnDisconnect(&op->op.disconnect);
+        go_on = 0;
         break;
       case WORKER_OP_TYPE_ENTITY_QUERY_RESPONSE:
         OnEntityQueryResponse(&op->op.entity_query_response);
@@ -219,6 +236,12 @@ int main(int argc, char** argv) {
     }
     Worker_OpList_Destroy(op_list);
   }
-
+  gettimeofday(&tv2, NULL);
+  double elapsed = (tv2.tv_sec - tv1.tv_sec) + (tv2.tv_usec - tv1.tv_usec) *1e-6;
+  if( elapsed == 0) {
+    elapsed = 1e-9;
+  }
   Worker_Connection_Destroy(connection);
+
+  printf("Received %lld in %f seconds (%f msg/sec)\n", msg_count, elapsed, (msg_count/elapsed) );
 }
