@@ -197,11 +197,12 @@ int main(int argc, char** argv) {
  
   /* Main loop. */
   unsigned long long msg_count = 0;
+  int samples = 0;
   int go_on = 1;
   struct timeval tv1, tv2;
   gettimeofday(&tv1, NULL);
 
-  while (go_on && msg_count < 10000000) {
+  while (go_on && samples < 42) {
     Worker_OpList* op_list = Worker_Connection_GetOpList(connection, 100);
     for (size_t i = 0; i < op_list->op_count; ++i) {
       ++msg_count;
@@ -235,13 +236,21 @@ int main(int argc, char** argv) {
       }
     }
     Worker_OpList_Destroy(op_list);
+
+    if(msg_count >= 100000) {
+      gettimeofday(&tv2, NULL);
+      double elapsed = (tv2.tv_sec - tv1.tv_sec) + (tv2.tv_usec - tv1.tv_usec) * 1e-6;
+      if( elapsed == 0) {
+        elapsed = 1e-9;
+      }
+      printf("Received %lld in %f seconds (%f msg/sec)\n", msg_count, elapsed, (msg_count/elapsed) );
+      msg_count = 0;
+      tv1 = tv2;
+      samples++;
+    }
   }
-  gettimeofday(&tv2, NULL);
-  double elapsed = (tv2.tv_sec - tv1.tv_sec) + (tv2.tv_usec - tv1.tv_usec) *1e-6;
-  if( elapsed == 0) {
-    elapsed = 1e-9;
-  }
+  
   Worker_Connection_Destroy(connection);
 
-  printf("Received %lld in %f seconds (%f msg/sec)\n", msg_count, elapsed, (msg_count/elapsed) );
+  
 }

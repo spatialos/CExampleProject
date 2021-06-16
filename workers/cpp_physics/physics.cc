@@ -45,6 +45,8 @@ int main(int argc, char** argv) {
   std::vector<worker::EntityId> entityIdList = {1, 101, 102};
   worker::EntityId physicsPartitionId = 2;
   worker::EntityId clientPartitionId = 3;
+  worker::EntityId clientPartitionId2 = 10;
+  worker::EntityId clientPartitionId3 = 11;
 
   worker::ConnectionParameters parameters;
   parameters.WorkerType = "physics";
@@ -102,12 +104,22 @@ int main(int argc, char** argv) {
   });
   view.OnCommandRequest<sample::Login::Commands::TakeControl>(
       [&](const worker::CommandRequestOp<sample::Login::Commands::TakeControl>& op) {
+        decltype(clientPartitionId) partId;
+        switch(op.EntityId) {
+          case 1: partId = clientPartitionId; break;
+          case 101: partId = clientPartitionId2; break;
+          case 102: partId = clientPartitionId3; break;
+          default:
+            partId = clientPartitionId;
+        }
         connection.SendLogMessage(worker::LogLevel::kInfo, "Physics",
-                                  "Assigning the client partition for entity " + std::to_string(op.EntityId)
+                                  "Assigning the client partition for entity " 
+                                  + std::to_string(op.EntityId) + " partition "
+                                  + std::to_string(partId)
                                   + " to worker with ID " +
                                       std::to_string(op.CallerWorkerEntityId));
         connection.SendCommandRequest<AssignPartitionCommand>(op.CallerWorkerEntityId,
-                                                              {clientPartitionId},
+                                                              {partId},
                                                               /* default timeout */ {});
       });
   view.OnCommandResponse<sample::ClientData::Commands::TestCommand>(
@@ -125,8 +137,7 @@ int main(int argc, char** argv) {
   while (is_connected) {
     view.Process(connection.GetOpList(kOpListTimeoutMs));
 
-    //for(const auto& entityId: entityIdList) { 
-    const auto& entityId = entityIdList[0];
+    for(const auto& entityId: entityIdList) { 
       // Update position of entity.
       if (view.GetAuthority<sample::PhysicsSimulationSet>(entityId) ==
           worker::Authority::kAuthoritative) {
@@ -143,7 +154,7 @@ int main(int argc, char** argv) {
         tick_count++;                                                                        
       }
       tick_count++;
-    //}
+    }
     
     if(tick_count >= 1000000) {
       double diff = std::chrono::duration<double, std::micro>(std::chrono::steady_clock::now() - start_time).count()*1e-6;
