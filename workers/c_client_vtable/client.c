@@ -182,6 +182,14 @@ int main(int argc, char** argv) {
   Worker_ConnectionFuture_Destroy(connection_future);
   free(worker_id);
 
+  if (Worker_Connection_GetConnectionStatusCode(connection) !=
+      WORKER_CONNECTION_STATUS_CODE_SUCCESS) {
+    printf("failed to connect to receptionist. reason: %s\n",
+           Worker_Connection_GetConnectionStatusDetailString(connection));
+    Worker_Connection_Destroy(connection);
+    return EXIT_FAILURE;
+  }
+
   /* Send a test message. */
   Worker_LogMessage message = {WORKER_LOG_LEVEL_WARN, "Client", "Connected successfully", NULL};
   Worker_Connection_SendLogMessage(connection, &message);
@@ -238,4 +246,5 @@ int main(int argc, char** argv) {
   }
 
   Worker_Connection_Destroy(connection);
+  return EXIT_SUCCESS;
 }
