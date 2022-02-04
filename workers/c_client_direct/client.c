@@ -134,9 +134,6 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  /* Default vtable. This enables schema objects to be passed through the C API directly to us. */
-  Worker_ComponentVtable default_vtable = {0};
-
   /* Generate worker ID. */
   char* worker_id = GenerateWorkerId(argv[3]);
 
@@ -145,8 +142,6 @@ int main(int argc, char** argv) {
   params.network.connection_type = WORKER_NETWORK_CONNECTION_TYPE_KCP;
   params.network.kcp.security_type = WORKER_NETWORK_SECURITY_TYPE_INSECURE;
   params.worker_type = "client_direct";
-  params.network.tcp.multiplex_level = 4;
-  params.default_component_vtable = &default_vtable;
 
   Worker_LogsinkParameters logsink_params = {0};
   logsink_params.logsink_type = WORKER_LOGSINK_TYPE_STDOUT;
@@ -182,9 +177,7 @@ int main(int argc, char** argv) {
   command_request.component_id = LOGIN_COMPONENT_ID;
   command_request.command_index = 1;
   command_request.schema_type = Schema_CreateCommandRequest();
-  Worker_CommandParameters command_parameters;
-  command_parameters.allow_short_circuit = 0;
-  Worker_Connection_SendCommandRequest(connection, 1, &command_request, NULL, &command_parameters);
+  Worker_Connection_SendCommandRequest(connection, 1, &command_request, NULL);
 
   /* Main loop. */
   while (1) {
