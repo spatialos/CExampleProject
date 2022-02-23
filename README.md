@@ -13,7 +13,7 @@ Build the project and start it with the default launch configuration:
 
 ```
 spatial worker build --target windows
-spatial local launch --runtime_version=15.0.1
+spatial local launch --runtime_version=16.1.0
 ```
 
 (Replacing `windows` with `macos` on macOS, or `linux` on Linux).
@@ -26,21 +26,18 @@ Note: If you run `spatial worker build` without a `--target` parameter (or with 
 parameter), then the CMake cache for each worker (`workers/<worker>/cmake_build`) may end up in
 a corrupt state. To recover, just run `spatial worker clean` to delete the CMake caches.
 
-Now, you can connect either one of the two C client workers (one implemented using "direct"
-serialization, the other implemented using "vtable" serialization). These workers can be
-launched with the following commands:
+Now, you can connect either  the C client workers. This worker can be
+launched with the following command:
 
-* Client (direct): `spatial local worker launch client_direct local`
-* Client (vtable): `spatial local worker launch client_vtable local`
+```
+spatial local worker launch client_direct local
+```
 
 ## Scenario
 
 This project is used to showcase the C API and how it can be used to implement a simple client
 worker which visualizes the state of a single entity whose position is updated by a "physics"
-worker. As serialization in the C API can be implemented in two different ways, we provide two
-implementations of the same worker in `workers/c_client_direct` and `workers/c_client_vtable`.
-Either one of these can be used as a basis for further experimentation, and the client worker that's
-not being used can easily be deleted without breaking any other functionality.
+worker. 
 
 When a client worker connects, it sends a command to the C++ worker (on the `sample.Login`
 component). The C++ worker then modifies the entity's write ACLs to delegate component 1001

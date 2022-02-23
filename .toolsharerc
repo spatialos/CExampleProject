@@ -1,1 +1,3 @@
 pinned_tool:
+  - tool: "imp-ci"
+    version: "20220107.155757.786ba20fca"
